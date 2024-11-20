@@ -1,0 +1,21 @@
+[project]
+name = "trace-deidentifier"
+version = "0.1.0"
+description = "xAPI trace deidentication"
+authors = [
+    { name = "Pierre", email = "pierre.martel@inokufu.com" }
+]
+dependencies = [
+    "fastapi>=0.115.5",
+    "uvicorn[standard]>=0.32.0",
+    "ralph-malph>=5.0.1",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.rye.scripts]
+start = "uvicorn trace_deidentifier.api.main:app --host 0.0.0.0 --port 8000 --reload"
