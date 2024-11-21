@@ -5,14 +5,14 @@ from src.trace_deidentifier.common.exceptions import InvalidTraceError
 
 
 class ExceptionHandler:
-    def __init__(self):
+    def __init__(self) -> None:
         self.error_mapping: dict[type[Exception], int] = {
             ValueError: status.HTTP_400_BAD_REQUEST,
             TypeError: status.HTTP_500_INTERNAL_SERVER_ERROR,
             InvalidTraceError: status.HTTP_400_BAD_REQUEST,
         }
 
-    def configure(self, app: FastAPI):
+    def configure(self, app: FastAPI) -> None:
         """
         Configure exception handlers for the FastAPI application.
 

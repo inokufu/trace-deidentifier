@@ -19,3 +19,14 @@ dev-dependencies = []
 
 [tool.rye.scripts]
 start = "uvicorn trace_deidentifier.api.main:app --host 0.0.0.0 --port 8000 --reload"
+
+
+[tool.ruff]
+output-format = "concise"
+target-version = "py312"
+line-length = 88
+indent-width = 4
+
+lint.pydocstyle.convention = "pep257"
+lint.flake8-bandit.check-typed-exception = true
+lint.flake8-type-checking.strict = true

@@ -6,6 +6,13 @@ from src.trace_deidentifier.common.types import JsonType
 
 
 class Trace(BaseModel):
+    """
+    Represents a trace containing xAPI data.
+
+    :param data: The xAPI statement data
+    :type data: BaseXapiStatement
+    """
+
     data: JsonType
 
     @model_validator(mode="before")
