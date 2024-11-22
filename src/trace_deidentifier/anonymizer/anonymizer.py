@@ -25,8 +25,13 @@ class Anonymizer:
         :param trace: The trace to anonymize
         :raises AnonymizationError: If any strategy fails to anonymize the trace
         """
+        errors = []
         for strategy in self.strategies:
             try:
                 strategy.anonymize(trace=trace)
             except Exception as e:
-                raise AnonymizationError(f"Failed to anonymize trace: {e!s}") from e
+                errors.append(str(e))
+                continue
+
+        if errors:
+            raise AnonymizationError(f"Failed to anonymize trace: {'; '.join(errors)}")

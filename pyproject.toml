@@ -15,7 +15,10 @@ requires-python = ">= 3.12"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "pytest>=8.3.3",
+    "pytest-cov>=6.0.0",
+]
 
 [tool.rye.scripts]
 start = "uvicorn trace_deidentifier.api.main:app --host 0.0.0.0 --port 8000 --reload"
@@ -30,3 +33,12 @@ indent-width = 4
 lint.pydocstyle.convention = "pep257"
 lint.flake8-bandit.check-typed-exception = true
 lint.flake8-type-checking.strict = true
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src"]
+addopts = "--cov=src"
+
+[tool.coverage.report]
+exclude_lines = [
+    "@abstractmethod"
+]

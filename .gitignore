@@ -11,3 +11,4 @@ wheels/
 
 # added by devs
 .idea
+.coverage
