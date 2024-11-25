@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-from src.trace_deidentifier.anonymizer.strategies.replacevalues import (
+from src.trace_deidentifier.anonymizer.strategies.replace_values import (
     ReplaceSensitiveValuesStrategy,
 )
 from src.trace_deidentifier.common.models.trace import Trace

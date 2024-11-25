@@ -1,7 +1,7 @@
 from typing import ClassVar
 
 from src.trace_deidentifier.common.models.trace import Trace
-from src.trace_deidentifier.common.utils.utils_dict import get_nested_field
+from src.trace_deidentifier.common.utils.utils_dict import DictUtils
 
 from .base import BaseAnonymizationStrategy
 
@@ -29,7 +29,7 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
 
     def anonymize(self, trace: Trace) -> None:
         for path in self.EXTENSION_PATHS:
-            if obj := get_nested_field(trace.data, path.split(".")):
+            if obj := DictUtils.get_nested_field(trace.data, path.split(".")):
                 extensions = obj.get("extensions")
                 if isinstance(extensions, dict) and extensions:
                     for ext in self.EXTENSIONS_TO_REMOVE:

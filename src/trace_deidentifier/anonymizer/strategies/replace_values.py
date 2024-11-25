@@ -1,7 +1,7 @@
 from typing import ClassVar
 
 from src.trace_deidentifier.common.models.trace import Trace
-from src.trace_deidentifier.common.utils.utils_dict import replace_nested_field
+from src.trace_deidentifier.common.utils.utils_dict import DictUtils
 
 from .base import BaseAnonymizationStrategy
 
@@ -21,4 +21,4 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
 
     def anonymize(self, trace: Trace) -> None:
         for field, value in self.FIELDS_TO_REPLACE.items():
-            replace_nested_field(trace.data, field.split("."), value)
+            DictUtils.replace_nested_field(trace.data, field.split("."), value)

@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-from src.trace_deidentifier.anonymizer.strategies.removefields import (
+from src.trace_deidentifier.anonymizer.strategies.remove_fields import (
     RemoveFieldsStrategy,
 )
 from src.trace_deidentifier.common.models.trace import Trace

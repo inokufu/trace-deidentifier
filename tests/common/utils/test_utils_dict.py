@@ -2,10 +2,7 @@ from typing import Any
 
 import pytest
 
-from src.trace_deidentifier.common.utils.utils_dict import (
-    get_nested_field,
-    replace_nested_field,
-)
+from src.trace_deidentifier.common.utils.utils_dict import DictUtils
 
 
 class TestGetNestedField:
@@ -83,7 +80,7 @@ class TestGetNestedField:
         :param keys: Path to the nested field
         :param expected: Expected value
         """
-        assert get_nested_field(data, keys) == expected
+        assert DictUtils.get_nested_field(data, keys) == expected
 
 
 class TestReplaceNestedField:
@@ -197,5 +194,5 @@ class TestReplaceNestedField:
         :param new_value: New value to set
         :param expected_data: Expected dictionary state after replacement
         """
-        replace_nested_field(initial_data, keys, new_value)
+        DictUtils.replace_nested_field(initial_data, keys, new_value)
         assert initial_data == expected_data
