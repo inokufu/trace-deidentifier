@@ -1,10 +1,10 @@
 from fastapi import Request
 
 from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
-from src.trace_deidentifier.anonymizer.strategies.removefields import (
+from src.trace_deidentifier.anonymizer.strategies.remove_fields import (
     RemoveFieldsStrategy,
 )
-from src.trace_deidentifier.anonymizer.strategies.replacevalues import (
+from src.trace_deidentifier.anonymizer.strategies.replace_values import (
     ReplaceSensitiveValuesStrategy,
 )
 
