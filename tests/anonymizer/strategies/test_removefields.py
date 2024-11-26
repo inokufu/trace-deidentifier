@@ -9,6 +9,8 @@ from src.trace_deidentifier.common.models.trace import Trace
 
 
 class TestRemoveFieldsStrategy:
+    """Tests removal of fields with sensitive values in traces."""
+
     @pytest.fixture
     def strategy(self) -> RemoveFieldsStrategy:
         """

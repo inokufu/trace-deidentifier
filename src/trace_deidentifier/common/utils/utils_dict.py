@@ -7,7 +7,8 @@ class DictUtils:
 
     @staticmethod
     def get_nested_field(
-        data: dict[str, Any], keys: list[str],
+        data: dict[str, Any],
+        keys: list[str],
     ) -> dict[str, Any] | None:
         """
         Get a nested dictionary field based on a path of keys.
@@ -59,14 +60,18 @@ class DictUtils:
             # Replace each value in the dictionary
             for key in data:
                 data[key] = DictUtils.regex_replace(
-                    data=data[key], pattern=pattern, value=value
+                    data=data[key],
+                    pattern=pattern,
+                    value=value,
                 )
 
         elif isinstance(data, list):
             # Replace each element in the list
             for i in range(len(data)):
                 data[i] = DictUtils.regex_replace(
-                    data=data[i], pattern=pattern, value=value
+                    data=data[i],
+                    pattern=pattern,
+                    value=value,
                 )
 
         return data
