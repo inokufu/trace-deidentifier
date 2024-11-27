@@ -95,6 +95,12 @@ class ExceptionHandler:
         :param request: The request that caused the exception
         :return: A dictionary containing the error detail
         """
+        if (
+            request.state.config.is_env_production()
+            and status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+        ):
+            return {"detail": "An internal server error occurred."}
+
         details = {"detail": str(exc)}
         if exc.__cause__ is not None:
             details["cause"] = str(exc.__cause__)
