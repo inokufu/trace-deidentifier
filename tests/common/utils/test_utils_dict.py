@@ -10,7 +10,7 @@ class TestGetNestedField:
     """Test suite for get_nested_field function."""
 
     @pytest.mark.parametrize(
-        "data,keys,expected",
+        ("data", "keys", "expected"),
         [
             pytest.param(
                 {"a": {"b": {"c": "value"}}},
@@ -88,7 +88,7 @@ class TestReplaceNestedField:
     """Test suite for replace_nested_field function."""
 
     @pytest.mark.parametrize(
-        "initial_data,keys,new_value,expected_data",
+        ("initial_data", "keys", "new_value", "expected_data"),
         [
             # Basic replacement test - just replace a simple nested value
             pytest.param(

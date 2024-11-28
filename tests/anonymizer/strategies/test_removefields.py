@@ -9,7 +9,7 @@ from src.trace_deidentifier.common.models.trace import Trace
 
 
 class TestRemoveFieldsStrategy:
-    """Tests removal of fields with sensitive values in traces."""
+    """Test suite for RemoveFieldsStrategy class."""
 
     @pytest.fixture
     def strategy(self) -> RemoveFieldsStrategy:
@@ -111,7 +111,7 @@ class TestRemoveFieldsStrategy:
         assert trace.data == trace_data
 
     @pytest.mark.parametrize(
-        "extensions,expected",
+        ("extensions", "expected"),
         [
             pytest.param("invalid", "invalid", id="string-extensions"),
             pytest.param(None, None, id="null-extensions"),

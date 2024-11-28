@@ -17,6 +17,13 @@ class AnonymizeTraceRequestModel(BaseModel):
 
 
 class AnonymizeTraceResponseModel(BaseModel):
+    """
+    Model for trace anonymization response.
+
+    Attributes:
+        trace (dict[str, Any]): The output trace data in xAPI format
+    """
+
     trace: Trace = Field(
         description="Anonymized output trace",
     )

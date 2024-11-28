@@ -9,7 +9,7 @@ from src.trace_deidentifier.common.models.trace import Trace
 
 
 class TestReplaceSensitiveValuesStrategy:
-    """Tests replacement of sensitive values with anonymous values in traces."""
+    """Test suite for ReplaceSensitiveValuesStrategy class."""
 
     @pytest.fixture
     def strategy(self) -> ReplaceSensitiveValuesStrategy:
