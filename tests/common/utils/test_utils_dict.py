@@ -10,7 +10,7 @@ class TestGetNestedField:
     """Test suite for get_nested_field function."""
 
     @pytest.mark.parametrize(
-        "data,keys,expected",
+        ("data", "keys", "expected"),
         [
             pytest.param(
                 {"a": {"b": {"c": "value"}}},
@@ -88,7 +88,7 @@ class TestReplaceNestedField:
     """Test suite for replace_nested_field function."""
 
     @pytest.mark.parametrize(
-        "initial_data,keys,new_value,expected_data",
+        ("initial_data", "keys", "new_value", "expected_data"),
         [
             # Basic replacement test - just replace a simple nested value
             pytest.param(
@@ -200,8 +200,10 @@ class TestReplaceNestedField:
 
 
 class TestRegexReplace:
+    """Test suite for regex_replace function."""
+
     @pytest.mark.parametrize(
-        "data,pattern,replacement,expected",
+        ("data", "pattern", "replacement", "expected"),
         [
             (
                 "Hello test@email.com !",
@@ -239,7 +241,19 @@ class TestRegexReplace:
         ],
     )
     def test_regex_replace(
-        self, data: Any, pattern: re.Pattern, replacement: str, expected: Any
+        self,
+        data: Any,
+        pattern: re.Pattern,
+        replacement: str,
+        expected: Any,
     ) -> None:
+        """
+        Test regex value replacement in different data structures.
+
+        :param data: Input data structure to process
+        :param pattern: Regex pattern to match
+        :param replacement: Value to replace matches with
+        :param expected: Expected output after replacement
+        """
         result = DictUtils.regex_replace(data=data, pattern=pattern, value=replacement)
         assert result == expected

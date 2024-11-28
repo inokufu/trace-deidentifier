@@ -5,7 +5,19 @@ from src.trace_deidentifier.common.exceptions import InvalidTraceError
 
 
 class ExceptionHandler:
+    """
+    A handler for managing and configuring FastAPI exception handling.
+
+    This class provides a centralized way to handle different types of exceptions
+    in a FastAPI application, mapping them to appropriate HTTP status codes and
+    providing consistent error response formatting.
+
+    The handler supports both known exceptions (configured via error_mapping)
+    and unexpected exceptions through a global handler.
+    """
+
     def __init__(self) -> None:
+        """Initialize the exception handler with default error mappings."""
         self.error_mapping: dict[type[Exception], int] = {
             ValueError: status.HTTP_400_BAD_REQUEST,
             TypeError: status.HTTP_500_INTERNAL_SERVER_ERROR,

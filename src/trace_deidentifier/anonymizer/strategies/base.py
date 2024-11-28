@@ -4,9 +4,7 @@ from src.trace_deidentifier.common.models.trace import Trace
 
 
 class BaseAnonymizationStrategy(ABC):
-    """
-    Abstract base class for anonymization strategies.
-    """
+    """Abstract base class for anonymization strategies."""
 
     @abstractmethod
     def anonymize(self, trace: Trace) -> None:
