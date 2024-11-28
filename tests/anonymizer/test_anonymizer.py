@@ -25,7 +25,8 @@ class TestAnonymizer:
     def test_should_require_at_least_one_strategy(self) -> None:
         """Test that initializing without strategies raises ValueError."""
         with pytest.raises(
-            ValueError, match="At least one anonymization strategy must be provided",
+            ValueError,
+            match="At least one anonymization strategy must be provided",
         ):
             Anonymizer(strategies=[])
 

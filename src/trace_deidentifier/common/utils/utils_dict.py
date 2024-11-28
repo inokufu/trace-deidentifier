@@ -43,7 +43,7 @@ class DictUtils:
             DictUtils.replace_nested_field(data[key], keys[1:], value)
 
     @staticmethod
-    def regex_replace(data: Any, pattern: re.Pattern, value: Any):
+    def regex_replace(data: Any, pattern: re.Pattern, value: Any) -> Any:
         """
         Recursively replace a value, which can be a string, dict, or list.
 

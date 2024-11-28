@@ -32,9 +32,9 @@ class TestEmailDetectionStrategy:
                             ],
                             "http://example.com/message": "Please contact admin@company.com",
                         },
-                    }
+                    },
                 },
-            }
+            },
         )
 
         strategy = EmailDetectionStrategy()
@@ -60,7 +60,7 @@ class TestEmailDetectionStrategy:
                         ],
                         "http://example.com/message": "Please contact anonymous@anonymous.org",
                     },
-                }
+                },
             },
         }
 
@@ -90,6 +90,7 @@ class TestEmailDetectionStrategy:
         ],
     )
     def test_complex_email_formats(self, email: str) -> None:
+        """Test email replacement for complex email formats."""
         trace = Trace.model_construct(data={"email": email})
         strategy = EmailDetectionStrategy()
         strategy.anonymize(trace)

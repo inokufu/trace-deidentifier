@@ -8,11 +8,9 @@ from .base import BaseAnonymizationStrategy
 
 
 class RegexDetectionStrategy(BaseAnonymizationStrategy, ABC):
-    """
-    Base class for strategies that replace values in a trace using regex patterns.
-    """
+    """Base class for strategies that replace values in a trace using regex patterns."""
 
-    def __init__(self, pattern: str, replacement: str):
+    def __init__(self, pattern: str, replacement: str) -> None:
         """
         Initialize the strategy with a regex pattern and a replacement value.
 
@@ -23,6 +21,7 @@ class RegexDetectionStrategy(BaseAnonymizationStrategy, ABC):
         self.replacement = replacement
 
     def anonymize(self, trace: Trace) -> None:
+        """Inherited from BaseAnonymizationStrategy.anonymize."""
         DictUtils.regex_replace(
             data=trace.data,
             pattern=self.pattern,
