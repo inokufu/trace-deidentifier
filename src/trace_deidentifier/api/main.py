@@ -43,6 +43,6 @@ app = FastAPI(
 )
 
 exception_handler = ExceptionHandler()
-exception_handler.configure(app)
+exception_handler.configure(app=app)
 
 app.include_router(router=anonymize_router)

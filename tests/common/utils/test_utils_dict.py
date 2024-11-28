@@ -1,4 +1,5 @@
 import re
+from copy import deepcopy
 from typing import Any
 
 import pytest
@@ -81,14 +82,14 @@ class TestGetNestedField:
         :param keys: Path to the nested field
         :param expected: Expected value
         """
-        assert DictUtils.get_nested_field(data, keys) == expected
+        assert DictUtils.get_nested_field(data=data, keys=keys) == expected
 
 
 class TestReplaceNestedField:
     """Test suite for replace_nested_field function."""
 
     @pytest.mark.parametrize(
-        ("initial_data", "keys", "new_value", "expected_data"),
+        ("initial_data", "keys", "new_value", "expected_data", "expected_result"),
         [
             # Basic replacement test - just replace a simple nested value
             pytest.param(
@@ -96,6 +97,7 @@ class TestReplaceNestedField:
                 ["a", "b", "c"],
                 "new_value",
                 {"a": {"b": {"c": "new_value"}}},
+                True,
                 id="basic-replacement",
             ),
             # Should not modify when keys list is empty
@@ -104,6 +106,7 @@ class TestReplaceNestedField:
                 [],
                 "new_value",
                 {"a": "value"},
+                False,
                 id="empty-keys",
             ),
             # Should not modify when intermediate key is missing
@@ -112,6 +115,7 @@ class TestReplaceNestedField:
                 ["a", "b", "c"],
                 "new_value",
                 {"a": {"c": "value"}},
+                False,
                 id="missing-key",
             ),
             # Should not modify when encountering a non-dict value in path
@@ -120,6 +124,7 @@ class TestReplaceNestedField:
                 ["a", "b", "c"],
                 "new_value",
                 {"a": {"b": "not_a_dict"}},
+                False,
                 id="non-dict-value",
             ),
             # Should not add new keys if final key doesn't exist
@@ -128,6 +133,7 @@ class TestReplaceNestedField:
                 ["a", "b", "c"],
                 "new_value",
                 {"a": {"b": {}}},
+                False,
                 id="missing-final-key",
             ),
             # Should handle replacing with a dictionary value
@@ -136,6 +142,7 @@ class TestReplaceNestedField:
                 ["a", "b"],
                 {"c": "new"},
                 {"a": {"b": {"c": "new"}}},
+                True,
                 id="dict-replacement",
             ),
             # Should properly handle None values in the path
@@ -144,6 +151,7 @@ class TestReplaceNestedField:
                 ["a", "b"],
                 "new",
                 {"a": {"b": "new"}},
+                True,
                 id="none-replacement",
             ),
             # Test deep nested structure replacement
@@ -152,6 +160,7 @@ class TestReplaceNestedField:
                 ["a", "b", "c"],
                 "new",
                 {"a": {"b": {"c": "new"}}},
+                True,
                 id="deep-replacement",
             ),
             # Test shallow structure replacement
@@ -160,6 +169,7 @@ class TestReplaceNestedField:
                 ["a", "b"],
                 "new",
                 {"a": {"b": "new"}},
+                True,
                 id="shallow-replacement",
             ),
             # Test with lists
@@ -168,6 +178,7 @@ class TestReplaceNestedField:
                 ["a", "b"],
                 "new_value",
                 {"a": {"b": "new_value"}},
+                True,
                 id="list-value-replacement",
             ),
             # Test with None
@@ -176,6 +187,7 @@ class TestReplaceNestedField:
                 ["a", "b", "c"],
                 None,
                 {"a": {"b": {"c": None}}},
+                True,
                 id="None-value",
             ),
         ],
@@ -186,6 +198,7 @@ class TestReplaceNestedField:
         keys: list[str],
         new_value: Any,
         expected_data: dict[str, Any],
+        expected_result: bool,
     ) -> None:
         """
         Test all field replacement scenarios.
@@ -195,8 +208,24 @@ class TestReplaceNestedField:
         :param new_value: New value to set
         :param expected_data: Expected dictionary state after replacement
         """
-        DictUtils.replace_nested_field(initial_data, keys, new_value)
+        before_replaced = deepcopy(initial_data)
+        result = DictUtils.replace_nested_field(
+            data=initial_data,
+            keys=keys,
+            value=new_value,
+        )
+
+        # Verify the return value matches expected
         assert initial_data == expected_data
+
+        # Verify the return value matches expected
+        assert result == expected_result
+
+        # If we expected a replacement, verify the data actually changed
+        if result is True:
+            assert initial_data != before_replaced
+        else:
+            assert initial_data == before_replaced
 
 
 class TestRegexReplace:

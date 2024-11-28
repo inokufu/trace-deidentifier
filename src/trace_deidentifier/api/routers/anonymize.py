@@ -31,5 +31,5 @@ async def anonymize_trace(
     :raises AnonymizationError: If the anonymization process fails
     """
     input_trace = query.trace
-    anonymizer.anonymize(input_trace)
+    anonymizer.anonymize(trace=input_trace)
     return AnonymizeTraceResponseModel(trace=input_trace)

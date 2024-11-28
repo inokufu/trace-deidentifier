@@ -34,7 +34,11 @@ class LoguruLogger(LoggerContract):
         message: str,
         context: dict[str, Any] | None = None,
     ) -> None:
-        self._logger.log(level.name, {"message": message, "context": context})
+        log_data = {"message": message}
+        if context:
+            log_data["context"] = context
+
+        self._logger.log(level.name, log_data)
 
     def debug(self, message: str, context: dict[str, Any] | None = None) -> None:
         """Inherited from LoggerContract.debug."""
@@ -67,12 +71,11 @@ class LoguruLogger(LoggerContract):
         context: dict[str, Any] | None = None,
     ) -> None:
         """Inherited from LoggerContract.exception."""
-        error_context = context or {}
-        error_context.update(
-            {
-                "exception_type": type(exc).__name__,
-                "exception_message": str(exc),
-            },
-        )
+        exc_context = {
+            "exception_type": type(exc).__name__,
+            "exception_message": str(exc),
+        }
+        if context:
+            exc_context.update(context)
 
-        self._logger.bind(**error_context).exception(message)
+        self.error(message=message, context=exc_context)

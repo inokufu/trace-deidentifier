@@ -4,9 +4,7 @@ from typing import Self
 
 
 class LogLevel(IntEnum):
-    """
-    Represents the different log levels.
-    """
+    """Represents the different log levels."""
 
     DEBUG = logging.DEBUG
     INFO = logging.INFO
@@ -19,8 +17,8 @@ class LogLevel(IntEnum):
         """Create a LogLevel from a string, case-insensitive."""
         try:
             return cls[value.upper()]
-        except KeyError:
+        except KeyError as e:
             valid_values = [e.name for e in cls]
             raise ValueError(
                 f"Invalid log level '{value}'. Must be one of: {valid_values}",
-            )
+            ) from e

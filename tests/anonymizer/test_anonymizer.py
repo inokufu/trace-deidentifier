@@ -11,26 +11,19 @@ from src.trace_deidentifier.common.models.trace import Trace
 class TestAnonymizer:
     """Test suite for Anonymizer class."""
 
-    @pytest.fixture
-    def mock_strategy(self) -> Mock:
-        """
-        Create a mock anonymization strategy.
-
-        :return: A mock strategy with anonymize method
-        """
-        strategy = Mock(spec=BaseAnonymizationStrategy)
-        strategy.anonymize = Mock()
-        return strategy
-
-    def test_should_require_at_least_one_strategy(self) -> None:
+    def test_should_require_at_least_one_strategy(self, mock_logger: Mock) -> None:
         """Test that initializing without strategies raises ValueError."""
         with pytest.raises(
             ValueError,
             match="At least one anonymization strategy must be provided",
         ):
-            Anonymizer(strategies=[])
+            Anonymizer(strategies=[], logger=mock_logger)
 
-    def test_should_apply_all_strategies(self, mock_strategy: Mock) -> None:
+    def test_should_apply_all_strategies(
+        self,
+        mock_strategy: Mock,
+        mock_logger: Mock,
+    ) -> None:
         """
         Test that all strategies are applied to the trace.
 
@@ -38,17 +31,21 @@ class TestAnonymizer:
         """
         # Create multiple strategy instances
         strategies = [mock_strategy, Mock(spec=BaseAnonymizationStrategy)]
-        anonymizer = Anonymizer(strategies=strategies)
+        anonymizer = Anonymizer(strategies=strategies, logger=mock_logger)
 
         # Create a trace and anonymize it
         trace = Trace.model_construct(data={"some": "data"})
-        anonymizer.anonymize(trace)
+        anonymizer.anonymize(trace=trace)
 
         # Verify each strategy was called exactly once with the trace
         for strategy in strategies:
             strategy.anonymize.assert_called_once_with(trace=trace)
 
-    def test_should_continue_on_strategy_error(self, mock_strategy: Mock) -> None:
+    def test_should_continue_on_strategy_error(
+        self,
+        mock_strategy: Mock,
+        mock_logger: Mock,
+    ) -> None:
         """
         Test that anonymization continues even if a strategy fails.
 
@@ -61,12 +58,15 @@ class TestAnonymizer:
         # Second strategy should still be called
         working_strategy = mock_strategy
 
-        anonymizer = Anonymizer(strategies=[failing_strategy, working_strategy])
+        anonymizer = Anonymizer(
+            strategies=[failing_strategy, working_strategy],
+            logger=mock_logger,
+        )
         trace = Trace.model_construct(data={"some": "data"})
 
         # Should raise an Exception
         with pytest.raises(AnonymizationError, match="Strategy failed"):
-            anonymizer.anonymize(trace)
+            anonymizer.anonymize(trace=trace)
 
         # Verify second strategy was still called
         working_strategy.anonymize.assert_called_once_with(trace=trace)
@@ -87,6 +87,7 @@ class TestAnonymizer:
         num_strategies: int,
         trace_data: dict,
         expected_calls: int,
+        mock_logger: Mock,
     ) -> None:
         """
         Test various anonymization scenarios.
@@ -99,10 +100,10 @@ class TestAnonymizer:
             Mock(spec=BaseAnonymizationStrategy) for _ in range(num_strategies)
         ]
 
-        anonymizer = Anonymizer(strategies=strategies)
+        anonymizer = Anonymizer(strategies=strategies, logger=mock_logger)
         trace = Trace.model_construct(data=trace_data)
 
-        anonymizer.anonymize(trace)
+        anonymizer.anonymize(trace=trace)
 
         # Verify each strategy was called the expected number of times
         for strategy in strategies:

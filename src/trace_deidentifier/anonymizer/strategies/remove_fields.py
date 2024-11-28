@@ -28,12 +28,20 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
     def anonymize(self, trace: Trace) -> None:
         """Inherited from BaseAnonymizationStrategy.anonymize."""
         for path in self.EXTENSION_PATHS:
-            if obj := DictUtils.get_nested_field(trace.data, path.split(".")):
+            if obj := DictUtils.get_nested_field(data=trace.data, keys=path.split(".")):
+                self.logger.debug("Path found in trace", {"path": path})
                 extensions = obj.get("extensions")
                 if isinstance(extensions, dict) and extensions:
+                    self.logger.debug("Extensions found in path", {"path": path})
                     for ext in self.EXTENSIONS_TO_REMOVE:
-                        extensions.pop(ext, None)
+                        if ext in extensions:
+                            self.logger.debug("Remove extension", {"extension": ext})
+                            extensions.pop(ext, None)
 
                     # Delete empty 'extensions' field
                     if not extensions:
+                        self.logger.debug(
+                            "Remove empty field extensions",
+                            {"path": path},
+                        )
                         obj.pop("extensions", None)

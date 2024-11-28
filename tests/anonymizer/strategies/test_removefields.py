@@ -1,4 +1,5 @@
 from typing import Any
+from unittest.mock import Mock
 
 import pytest
 
@@ -12,13 +13,15 @@ class TestRemoveFieldsStrategy:
     """Test suite for RemoveFieldsStrategy class."""
 
     @pytest.fixture
-    def strategy(self) -> RemoveFieldsStrategy:
+    def strategy(self, mock_logger: Mock) -> RemoveFieldsStrategy:
         """
         Create a RemoveFieldsStrategy instance.
 
         :return: A strategy instance
         """
-        return RemoveFieldsStrategy()
+        strategy = RemoveFieldsStrategy()
+        strategy.logger = mock_logger
+        return strategy
 
     @pytest.fixture
     def trace_with_extensions(self) -> Trace:
@@ -65,7 +68,7 @@ class TestRemoveFieldsStrategy:
         :param strategy: The strategy to test
         :param trace_with_extensions: A trace containing test extensions
         """
-        strategy.anonymize(trace_with_extensions)
+        strategy.anonymize(trace=trace_with_extensions)
         assert trace_with_extensions.data == {
             "context": {
                 "extensions": {
@@ -107,7 +110,7 @@ class TestRemoveFieldsStrategy:
         :param trace_data: The test data
         """
         trace = Trace.model_construct(data=trace_data)
-        strategy.anonymize(trace)
+        strategy.anonymize(trace=trace)
         assert trace.data == trace_data
 
     @pytest.mark.parametrize(
@@ -132,5 +135,5 @@ class TestRemoveFieldsStrategy:
         :param expected: Expected result after anonymization
         """
         trace = Trace.model_construct(data={"context": {"extensions": extensions}})
-        strategy.anonymize(trace)
+        strategy.anonymize(trace=trace)
         assert trace.data.get("context").get("extensions") == expected

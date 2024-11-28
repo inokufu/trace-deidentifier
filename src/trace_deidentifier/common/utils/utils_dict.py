@@ -25,22 +25,29 @@ class DictUtils:
         return data
 
     @staticmethod
-    def replace_nested_field(data: dict[str, Any], keys: list[str], value: Any) -> None:
+    def replace_nested_field(data: dict[str, Any], keys: list[str], value: Any) -> bool:
         """
         Recursively navigate through nested dictionaries to replace a field.
 
         :param data: The dictionary to modify
         :param keys: List of keys representing the path to the field
         :param value: The value to set at the specified field
+        :returns: True if a field was found and replaced, False otherwise
         """
         if not keys:  # In case keys list is empty
-            return
+            return False
         key = keys[0]
         if len(keys) == 1:
             if key in data:
                 data[key] = value
+                return True
         elif key in data and isinstance(data[key], dict):
-            DictUtils.replace_nested_field(data[key], keys[1:], value)
+            return DictUtils.replace_nested_field(
+                data=data[key],
+                keys=keys[1:],
+                value=value,
+            )
+        return False
 
     @staticmethod
     def regex_replace(data: Any, pattern: re.Pattern, value: Any) -> Any:

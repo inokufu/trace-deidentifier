@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from pydantic import Field, BeforeValidator
+from pydantic import BeforeValidator, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from src.trace_deidentifier.infrastructure.logging.loglevel import LogLevel
@@ -10,9 +10,7 @@ from .environment import Environment
 
 
 class Settings(BaseSettings, ConfigContract):
-    """
-    Application settings loaded from environment variables, via Pydantic model
-    """
+    """Application settings loaded from environment variables, via Pydantic model."""
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -36,7 +34,3 @@ class Settings(BaseSettings, ConfigContract):
     def get_log_level(self) -> LogLevel:
         """Inherited from ConfigContract.get_log_level."""
         return self.log_level
-
-    def is_env_production(self):
-        """Inherited from ConfigContract.is_env_production."""
-        return self.environment == Environment.PRODUCTION

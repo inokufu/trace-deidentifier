@@ -25,4 +25,5 @@ async def get_anonymizer(request: Request) -> Anonymizer:
             RemoveFieldsStrategy(),
             EmailDetectionStrategy(),
         ],
+        logger=request.state.logger,
     )
