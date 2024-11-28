@@ -26,7 +26,6 @@ dev-dependencies = [
 start = "uvicorn trace_deidentifier.api.main:app --host 0.0.0.0 --port 8000 --reload"
 
 
-
 [tool.ruff]
 output-format = "concise"
 target-version = "py312"
