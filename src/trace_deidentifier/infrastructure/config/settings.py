@@ -1,5 +1,6 @@
-from pydantic import Field, field_validator
-from pydantic_core.core_schema import ValidationInfo
+from typing import Annotated
+
+from pydantic import Field, BeforeValidator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from src.trace_deidentifier.infrastructure.logging.loglevel import LogLevel
@@ -18,22 +19,15 @@ class Settings(BaseSettings, ConfigContract):
         env_file_encoding="utf-8",
     )
 
-    environment: Environment = Field(default=Environment.PRODUCTION.value)
-    log_level: LogLevel = Field(default=LogLevel.INFO.name)
+    environment: Annotated[
+        Environment,
+        BeforeValidator(lambda v: Environment[v.upper()] if isinstance(v, str) else v),
+    ] = Field(default=Environment.PRODUCTION.value)
 
-    @field_validator("log_level", mode="before")
-    @classmethod
-    def validate_log_level(
-        cls,
-        log_level: str | LogLevel,
-        values: ValidationInfo,
-    ) -> LogLevel:
-        """
-        Convert log level strings to their corresponding LogLevel enum.
-        """
-        if isinstance(log_level, str):
-            return LogLevel.from_str(log_level)
-        return log_level
+    log_level: Annotated[
+        LogLevel,
+        BeforeValidator(lambda v: LogLevel.from_str(v) if isinstance(v, str) else v),
+    ] = Field(default=LogLevel.INFO.name)
 
     def get_environment(self) -> Environment:
         """Inherited from ConfigContract.get_environment."""
