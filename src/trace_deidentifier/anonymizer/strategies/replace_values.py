@@ -7,9 +7,7 @@ from .base import BaseAnonymizationStrategy
 
 
 class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
-    """
-    Strategy to replace sensitive values with anonymous values.
-    """
+    """Strategy to replace sensitive values with anonymous values."""
 
     FIELDS_TO_REPLACE: ClassVar[set[str]] = {
         "actor.name": "Anonymous",
@@ -20,5 +18,6 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
     }
 
     def anonymize(self, trace: Trace) -> None:
+        """Inherited from BaseAnonymizationStrategy.anonymize."""
         for field, value in self.FIELDS_TO_REPLACE.items():
             DictUtils.replace_nested_field(trace.data, field.split("."), value)

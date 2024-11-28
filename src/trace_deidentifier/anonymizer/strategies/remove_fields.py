@@ -7,9 +7,7 @@ from .base import BaseAnonymizationStrategy
 
 
 class RemoveFieldsStrategy(BaseAnonymizationStrategy):
-    """
-    Strategy to remove non-required fields with sensitive values.
-    """
+    """Strategy to remove non-required fields with sensitive values."""
 
     EXTENSIONS_TO_REMOVE: ClassVar[set[str]] = {
         "http://id.tincanapi.com/extension/browser-info",
@@ -28,6 +26,7 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
     }
 
     def anonymize(self, trace: Trace) -> None:
+        """Inherited from BaseAnonymizationStrategy.anonymize."""
         for path in self.EXTENSION_PATHS:
             if obj := DictUtils.get_nested_field(trace.data, path.split(".")):
                 extensions = obj.get("extensions")

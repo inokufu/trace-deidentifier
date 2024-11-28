@@ -6,7 +6,8 @@ class DictUtils:
 
     @staticmethod
     def get_nested_field(
-        data: dict[str, Any], keys: list[str],
+        data: dict[str, Any],
+        keys: list[str],
     ) -> dict[str, Any] | None:
         """
         Get a nested dictionary field based on a path of keys.

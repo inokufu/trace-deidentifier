@@ -5,12 +5,14 @@ from .strategies.base import BaseAnonymizationStrategy
 
 
 class Anonymizer:
-    """
-    Main class responsible for applying anonymization strategies to a trace.
-    """
+    """Main class responsible for applying anonymization strategies to a trace."""
 
     def __init__(self, strategies: list[BaseAnonymizationStrategy]) -> None:
         """
+        Initialize the anonymizer with a list of anonymization strategies.
+
+        The anonymizer will apply all provided strategies in sequence when anonymizing traces.
+
         :param strategies: List of anonymization strategies to apply
         :raises ValueError: If no strategies are provided
         """

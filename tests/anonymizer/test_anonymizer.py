@@ -24,12 +24,10 @@ class TestAnonymizer:
 
     def test_should_require_at_least_one_strategy(self) -> None:
         """Test that initializing without strategies raises ValueError."""
-        with pytest.raises(ValueError) as exc_info:
+        with pytest.raises(
+            ValueError, match="At least one anonymization strategy must be provided",
+        ):
             Anonymizer(strategies=[])
-        assert (
-            str(exc_info.value)
-            == "At least one anonymization strategy must be provided"
-        )
 
     def test_should_apply_all_strategies(self, mock_strategy: Mock) -> None:
         """
@@ -66,15 +64,14 @@ class TestAnonymizer:
         trace = Trace.model_construct(data={"some": "data"})
 
         # Should raise an Exception
-        with pytest.raises(AnonymizationError) as exc_info:
+        with pytest.raises(AnonymizationError, match="Strategy failed"):
             anonymizer.anonymize(trace)
-            assert "Strategy failed" in str(exc_info.value)
 
         # Verify second strategy was still called
         working_strategy.anonymize.assert_called_once_with(trace=trace)
 
     @pytest.mark.parametrize(
-        "num_strategies,trace_data,expected_calls",
+        ("num_strategies", "trace_data", "expected_calls"),
         [
             # Empty trace should still be processed
             pytest.param(1, {}, 1, id="empty-trace"),
