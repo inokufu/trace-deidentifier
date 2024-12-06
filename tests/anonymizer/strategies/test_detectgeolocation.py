@@ -2,7 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from src.trace_deidentifier.anonymizer.strategies.detect_geolocation import (
+from src.trace_deidentifier.anonymizer.strategies.detect_geolocations import (
     GeoLocationDetectionStrategy,
 )
 from src.trace_deidentifier.common.models.trace import Trace
