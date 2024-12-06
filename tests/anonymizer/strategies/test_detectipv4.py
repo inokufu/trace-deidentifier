@@ -84,7 +84,7 @@ class TestIpv4DetectionStrategy:
 
         :param strategy: The strategy to test
         :param input_data: Input data with IPs to test
-        :param input_data: Expected result after anonymization
+        :param expected_data: Expected result after anonymization
         """
         trace = Trace.model_construct(data=input_data)
         strategy.anonymize(trace)

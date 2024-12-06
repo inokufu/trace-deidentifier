@@ -106,7 +106,12 @@ class TestEmailDetectionStrategy:
         email: str,
         strategy: EmailDetectionStrategy,
     ) -> None:
-        """Test email replacement for complex email formats."""
+        """
+        Test email replacement for complex email formats.
+
+        :param strategy: The strategy to test
+        :param email: Email to test
+        """
         trace = Trace.model_construct(data={"email": email})
         strategy.anonymize(trace=trace)
         assert trace.data["email"] == "anonymous@anonymous.org"
