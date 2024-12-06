@@ -9,7 +9,7 @@ from .base import BaseAnonymizationStrategy
 class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
     """Strategy to replace sensitive values with anonymous values."""
 
-    FIELDS_TO_REPLACE: ClassVar[set[str]] = {
+    FIELDS_TO_REPLACE: ClassVar[dict[str, str]] = {
         "actor.name": "Anonymous",
         "actor.mbox": "mailto:anonymous@anonymous.org",
         "actor.mbox_sha1sum": "84c014de9d5cb87777be0e00a1627798821db5e3",  # sha1 of mailto:anonymous@anonymous.org
