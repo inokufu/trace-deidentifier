@@ -4,6 +4,9 @@ from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
 from src.trace_deidentifier.anonymizer.strategies.detect_emails import (
     EmailDetectionStrategy,
 )
+from src.trace_deidentifier.anonymizer.strategies.detect_geolocations import (
+    GeoLocationDetectionStrategy,
+)
 from src.trace_deidentifier.anonymizer.strategies.detect_ipsv4 import (
     Ipv4DetectionStrategy,
 )
@@ -32,6 +35,7 @@ async def get_anonymizer(request: Request) -> Anonymizer:
             EmailDetectionStrategy(),
             Ipv4DetectionStrategy(),
             Ipv6DetectionStrategy(),
+            GeoLocationDetectionStrategy(),
         ],
         logger=request.state.logger,
     )
