@@ -1,0 +1,101 @@
+import io
+from typing import Any
+
+import pytest
+from loguru import logger
+
+from src.trace_deidentifier.infrastructure.logging.loglevel import LogLevel
+from src.trace_deidentifier.infrastructure.logging.loguru import LoguruLogger
+
+
+@pytest.fixture
+def loguru_logger() -> LoguruLogger:
+    """
+    Create a LoguruLogger instance for testing.
+
+    :return: Configured LoguruLogger instance
+    """
+    return LoguruLogger(level=LogLevel.DEBUG)
+
+
+@pytest.fixture
+def capture_logs() -> io.StringIO:
+    """
+    Capture logs output to a string buffer.
+
+    :yield: StringIO buffer containing log output
+    """
+    log_stream = io.StringIO()
+    logger.remove()
+    logger.add(log_stream, format="{message}")
+    yield log_stream
+    logger.remove()
+
+
+@pytest.mark.parametrize(
+    ("level", "message", "context"),
+    [
+        ("debug", "Debug message", {"key": "value"}),
+        ("info", "Info message", None),
+        ("warning", "Warning message", {"key": "value"}),
+        ("error", "Error message", {"error": "value"}),
+        ("critical", "Critical message", None),
+    ],
+)
+def test_log_levels(
+    loguru_logger: LoguruLogger,
+    capture_logs: io.StringIO,
+    level: str,
+    message: str,
+    context: dict[str, Any] | None,
+) -> None:
+    """
+    Test all logging levels with various message/context combinations.
+
+    :param loguru_logger: Logger instance
+    :param capture_logs: String buffer capturing log output
+    :param level: Log level to test
+    :param message: Message to log
+    :param context: Optional context dictionary
+    """
+    # Get logging method dynamically
+    log_method = getattr(loguru_logger, level)
+
+    # Log with or without context
+    log_method(message, context=context)
+
+    # Get logged output
+    logs = capture_logs.getvalue()
+
+    # Verify message is present
+    assert message in logs
+
+    # Verify context if provided
+    if context:
+        for key, value in context.items():
+            assert f"'{key}': '{value}'" in logs
+
+
+def test_exception_log(loguru_logger: LoguruLogger, capture_logs: io.StringIO) -> None:
+    """
+    Test exception logging with context.
+
+    :asserting:
+        - Exception message is properly logged
+        - Exception type is included
+        - Additional context is preserved
+    """
+    try:
+        raise ValueError("Sample exception")
+    except ValueError as exc:
+        loguru_logger.exception(
+            "An error occurred",
+            exc=exc,
+            context={"additional": "info"},
+        )
+
+    logs = capture_logs.getvalue()
+    assert (
+        logs.strip()
+        == "{'message': 'An error occurred', 'context': {'exception_type': 'ValueError', 'exception_message': 'Sample exception', 'additional': 'info'}}"
+    )
