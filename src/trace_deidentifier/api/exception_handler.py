@@ -86,10 +86,10 @@ class ExceptionHandler:
         :return: A JSON response indicating an internal server error
         """
         return JSONResponse(
-            status_code=500,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content=self.get_error_detail(
                 exc=exc,
-                status_code=500,
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 request=request,
             ),
         )

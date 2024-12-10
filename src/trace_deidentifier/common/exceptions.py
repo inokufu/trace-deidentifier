@@ -3,4 +3,4 @@ class TraceError(Exception):
 
 
 class InvalidTraceError(TraceError):
-    """Exception when a trace to his Pydantic model fails."""
+    """Exception raised when trace validation fails against its Pydantic model."""
