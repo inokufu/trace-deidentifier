@@ -8,11 +8,11 @@ from src.trace_deidentifier.api.schemas import (
     AnonymizeTraceResponseModel,
 )
 
-router = APIRouter()
+router = APIRouter(prefix="/anonymize")
 
 
 @router.post(
-    "/anonymize",
+    "",
     response_model=AnonymizeTraceResponseModel,
     tags=["Trace anonymization"],
     description="Anonymize an input trace.",
