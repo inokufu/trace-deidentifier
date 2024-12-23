@@ -10,13 +10,13 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
     """Strategy to remove non-required fields with sensitive values."""
 
     EXTENSIONS_TO_REMOVE: ClassVar[set[str]] = {
-        "http://id.tincanapi.com/extension/browser-info",
-        "http://id.tincanapi.com/extension/ip-address",
-        "http://id.tincanapi.com/extension/invitee",
-        "http://id.tincanapi.com/extension/observer",
-        "http://id.tincanapi.com/extension/referrer",
-        "http://id.tincanapi.com/extension/tweet",
-        "http://id.tincanapi.com/extension/geojson",
+        "browser-info",
+        "ip-address",
+        "invitee",
+        "observer",
+        "referrer",
+        "tweet",
+        "geojson",
     }
 
     EXTENSION_PATHS: ClassVar[set[str]] = {
@@ -33,10 +33,14 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
                 extensions = obj.get("extensions")
                 if isinstance(extensions, dict) and extensions:
                     self.logger.debug("Extensions found in path", {"path": path})
-                    for ext in self.EXTENSIONS_TO_REMOVE:
-                        if ext in extensions:
-                            self.logger.debug("Remove extension", {"extension": ext})
-                            extensions.pop(ext, None)
+                    extensions_to_remove = [
+                        ext_url
+                        for ext_url in extensions
+                        if self._should_remove_extension(ext_url)
+                    ]
+                    for ext in extensions_to_remove:
+                        self.logger.debug("Remove extension", {"extension": ext})
+                        extensions.pop(ext, None)
 
                     # Delete empty 'extensions' field
                     if not extensions:
@@ -45,3 +49,12 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
                             {"path": path},
                         )
                         obj.pop("extensions", None)
+
+    def _should_remove_extension(self, extension_url: str) -> bool:
+        """
+        Check if an extension URL ends with any of the sensitive extension names.
+
+        :param extension_url: The full extension URL to check
+        :return: True if the extension should be removed, False otherwise
+        """
+        return any(extension_url.endswith(ext) for ext in self.EXTENSIONS_TO_REMOVE)

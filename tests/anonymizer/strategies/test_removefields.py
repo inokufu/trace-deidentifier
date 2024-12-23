@@ -44,14 +44,14 @@ class TestRemoveFieldsStrategy:
                     "id": "https://example.com/activity/unique_id",
                     "definition": {
                         "extensions": {
-                            "http://id.tincanapi.com/extension/referrer": "http://example.com",
+                            "https://id.tincanapi.com/extension/referrer": "http://example.com",
                             "safe-extension": "keep",
                         },
                     },
                 },
                 "result": {
                     "extensions": {
-                        "http://id.tincanapi.com/extension/ip-address": "12",
+                        "http://id.tincanapi.com/extensions/ip-address": "12",
                     },
                 },
             },
