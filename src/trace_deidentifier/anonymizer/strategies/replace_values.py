@@ -53,7 +53,7 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
                 value=value,
             )
             if replaced:
-                self.logger.info(
+                self.logger.debug(
                     "Replaced field in trace",
                     {"field": field, "value": value},
                 )
