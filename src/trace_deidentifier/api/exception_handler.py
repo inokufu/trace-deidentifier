@@ -1,7 +1,9 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
+from src.trace_deidentifier.anonymizer.exceptions import AnonymizationError
 from src.trace_deidentifier.common.exceptions import InvalidTraceError
+from src.trace_deidentifier.infrastructure.logging.loglevel import LogLevel
 
 
 class ExceptionHandler:
@@ -22,6 +24,7 @@ class ExceptionHandler:
             ValueError: status.HTTP_400_BAD_REQUEST,
             TypeError: status.HTTP_500_INTERNAL_SERVER_ERROR,
             InvalidTraceError: status.HTTP_400_BAD_REQUEST,
+            AnonymizationError: status.HTTP_500_INTERNAL_SERVER_ERROR,
         }
 
     def configure(self, app: FastAPI) -> None:
@@ -107,8 +110,25 @@ class ExceptionHandler:
         :param request: The request that caused the exception
         :return: A dictionary containing the error detail
         """
+        if (
+            request.state.config.is_env_production()
+            and status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
+        ):
+            return {"detail": "An internal server error occurred."}
+
         details = {"detail": str(exc)}
         if exc.__cause__ is not None:
             details["cause"] = str(exc.__cause__)
+
+        request.state.logger.exception(
+            "HTTP Error",
+            exc,
+            {
+                "status_code": status_code,
+                "details": details
+                if request.state.config.get_log_level() == LogLevel.DEBUG
+                else None,
+            },
+        )
 
         return details

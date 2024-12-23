@@ -1,3 +1,5 @@
+from unittest.mock import Mock
+
 import pytest
 
 from src.trace_deidentifier.anonymizer.strategies.detect_emails import (
@@ -9,7 +11,18 @@ from src.trace_deidentifier.common.models.trace import Trace
 class TestEmailDetectionStrategy:
     """Tests email detection and replacement in traces."""
 
-    def test_anonymize_emails_in_trace(self) -> None:
+    @pytest.fixture
+    def strategy(self, mock_logger: Mock) -> EmailDetectionStrategy:
+        """
+        Create a EmailDetectionStrategy instance.
+
+        :return: A strategy instance
+        """
+        strategy = EmailDetectionStrategy()
+        strategy.logger = mock_logger
+        return strategy
+
+    def test_anonymize_emails_in_trace(self, strategy: EmailDetectionStrategy) -> None:
         """Test email replacement in a complete xAPI trace with emails in various contexts."""
         trace = Trace.model_construct(
             data={
@@ -37,8 +50,7 @@ class TestEmailDetectionStrategy:
             },
         )
 
-        strategy = EmailDetectionStrategy()
-        strategy.anonymize(trace)
+        strategy.anonymize(trace=trace)
 
         expected = {
             "actor": {
@@ -89,9 +101,12 @@ class TestEmailDetectionStrategy:
             "!def!xyz%abc@example.com",
         ],
     )
-    def test_complex_email_formats(self, email: str) -> None:
+    def test_complex_email_formats(
+        self,
+        email: str,
+        strategy: EmailDetectionStrategy,
+    ) -> None:
         """Test email replacement for complex email formats."""
         trace = Trace.model_construct(data={"email": email})
-        strategy = EmailDetectionStrategy()
-        strategy.anonymize(trace)
+        strategy.anonymize(trace=trace)
         assert trace.data["email"] == "anonymous@anonymous.org"

@@ -20,4 +20,13 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
     def anonymize(self, trace: Trace) -> None:
         """Inherited from BaseAnonymizationStrategy.anonymize."""
         for field, value in self.FIELDS_TO_REPLACE.items():
-            DictUtils.replace_nested_field(trace.data, field.split("."), value)
+            replaced = DictUtils.replace_nested_field(
+                data=trace.data,
+                keys=field.split("."),
+                value=value,
+            )
+            if replaced:
+                self.logger.debug(
+                    "Replaced field in trace",
+                    {"field": field, "value": value},
+                )

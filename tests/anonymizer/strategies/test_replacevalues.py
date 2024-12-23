@@ -1,4 +1,5 @@
 from typing import Any
+from unittest.mock import Mock
 
 import pytest
 
@@ -12,14 +13,16 @@ class TestReplaceSensitiveValuesStrategy:
     """Test suite for ReplaceSensitiveValuesStrategy class."""
 
     @pytest.fixture
-    def strategy(self) -> ReplaceSensitiveValuesStrategy:
+    def strategy(self, mock_logger: Mock) -> ReplaceSensitiveValuesStrategy:
         """
         Create a ReplaceSensitiveValuesStrategy instance.
 
         :return: A strategy instance
         :rtype: ReplaceSensitiveValuesStrategy
         """
-        return ReplaceSensitiveValuesStrategy()
+        strategy = ReplaceSensitiveValuesStrategy()
+        strategy.logger = mock_logger
+        return strategy
 
     @pytest.fixture
     def trace_with_sensitive_values(self) -> Trace:
@@ -58,7 +61,7 @@ class TestReplaceSensitiveValuesStrategy:
         :param strategy: The strategy to test
         :param trace_with_sensitive_values: A trace containing sensitive data
         """
-        strategy.anonymize(trace_with_sensitive_values)
+        strategy.anonymize(trace=trace_with_sensitive_values)
         assert trace_with_sensitive_values.data == {
             "actor": {
                 "name": "Anonymous",
@@ -96,5 +99,5 @@ class TestReplaceSensitiveValuesStrategy:
         :param actor_value: Invalid actor value to test
         """
         trace = Trace.model_construct(data={"actor": actor_value})
-        strategy.anonymize(trace)
+        strategy.anonymize(trace=trace)
         assert trace.data.get("actor") == actor_value

@@ -17,11 +17,17 @@ class RegexDetectionStrategy(BaseAnonymizationStrategy, ABC):
         :param pattern: Regex pattern to match
         :param replacement: Replacement value for matching patterns
         """
-        self.pattern = re.compile(pattern)
+        super().__init__()
+        self.pattern = re.compile(pattern=pattern)
         self.replacement = replacement
 
     def anonymize(self, trace: Trace) -> None:
         """Inherited from BaseAnonymizationStrategy.anonymize."""
+        self.logger.debug(
+            "Apply regex replacement",
+            {"pattern": self.pattern, "replacement": self.replacement},
+        )
+
         DictUtils.regex_replace(
             data=trace.data,
             pattern=self.pattern,

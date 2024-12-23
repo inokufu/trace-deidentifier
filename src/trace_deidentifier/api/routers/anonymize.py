@@ -13,7 +13,6 @@ router = APIRouter(prefix="/anonymize")
 
 @router.post(
     "",
-    response_model=AnonymizeTraceResponseModel,
     tags=["Trace anonymization"],
     description="Anonymize an input trace.",
     status_code=200,
@@ -31,5 +30,5 @@ async def anonymize_trace(
     :raises AnonymizationError: If the anonymization process fails
     """
     input_trace = query.trace
-    anonymizer.anonymize(input_trace)
+    anonymizer.anonymize(trace=input_trace)
     return AnonymizeTraceResponseModel(trace=input_trace)
