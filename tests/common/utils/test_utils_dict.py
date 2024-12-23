@@ -1,3 +1,4 @@
+import re
 from typing import Any
 
 import pytest
@@ -196,3 +197,63 @@ class TestReplaceNestedField:
         """
         DictUtils.replace_nested_field(initial_data, keys, new_value)
         assert initial_data == expected_data
+
+
+class TestRegexReplace:
+    """Test suite for regex_replace function."""
+
+    @pytest.mark.parametrize(
+        ("data", "pattern", "replacement", "expected"),
+        [
+            (
+                "Hello test@email.com !",
+                re.compile(r"test@email\.com"),
+                "anon@anon.com",
+                "Hello anon@anon.com !",
+            ),
+            (
+                {"email": "test@email.com", "toto": "tata"},
+                re.compile(r"test@email\.com"),
+                "anon@anon.com",
+                {"email": "anon@anon.com", "toto": "tata"},
+            ),
+            (
+                ["toto", {"nested": "test@email.com"}],
+                re.compile(r"test@email\.com"),
+                "anon@anon.com",
+                ["toto", {"nested": "anon@anon.com"}],
+            ),
+            (
+                [
+                    "toto",
+                    "test@email.com",
+                    {"nested": ["test@email.com"], "tata": "tutu"},
+                ],
+                re.compile(r"test@email\.com"),
+                "anon@anon.com",
+                [
+                    "toto",
+                    "anon@anon.com",
+                    {"nested": ["anon@anon.com"], "tata": "tutu"},
+                ],
+            ),
+            (123, re.compile(r"test"), "anon", 123),
+        ],
+    )
+    def test_regex_replace(
+        self,
+        data: Any,
+        pattern: re.Pattern,
+        replacement: str,
+        expected: Any,
+    ) -> None:
+        """
+        Test regex value replacement in different data structures.
+
+        :param data: Input data structure to process
+        :param pattern: Regex pattern to match
+        :param replacement: Value to replace matches with
+        :param expected: Expected output after replacement
+        """
+        result = DictUtils.regex_replace(data=data, pattern=pattern, value=replacement)
+        assert result == expected

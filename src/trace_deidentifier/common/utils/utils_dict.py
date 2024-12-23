@@ -1,3 +1,4 @@
+import re
 from typing import Any
 
 
@@ -40,3 +41,37 @@ class DictUtils:
                 data[key] = value
         elif key in data and isinstance(data[key], dict):
             DictUtils.replace_nested_field(data[key], keys[1:], value)
+
+    @staticmethod
+    def regex_replace(data: Any, pattern: re.Pattern, value: Any) -> Any:
+        """
+        Recursively replace a value, which can be a string, dict, or list.
+
+        :param data: Input data (str, dict, or list) to process
+        :param pattern: Compiled regex pattern to search for
+        :param value: Replacement string
+        :return: The modified data with replacements applied
+        """
+        if isinstance(data, str):
+            # Apply regex replacement directly
+            return pattern.sub(repl=value, string=data)
+
+        if isinstance(data, dict):
+            # Replace each value in the dictionary
+            for key in data:
+                data[key] = DictUtils.regex_replace(
+                    data=data[key],
+                    pattern=pattern,
+                    value=value,
+                )
+
+        elif isinstance(data, list):
+            # Replace each element in the list
+            for i in range(len(data)):
+                data[i] = DictUtils.regex_replace(
+                    data=data[i],
+                    pattern=pattern,
+                    value=value,
+                )
+
+        return data
