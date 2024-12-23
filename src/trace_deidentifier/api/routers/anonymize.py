@@ -13,7 +13,6 @@ router = APIRouter(prefix="/anonymize")
 
 @router.post(
     "",
-    response_model=AnonymizeTraceResponseModel,
     tags=["Trace anonymization"],
     description="Anonymize an input trace.",
     status_code=200,

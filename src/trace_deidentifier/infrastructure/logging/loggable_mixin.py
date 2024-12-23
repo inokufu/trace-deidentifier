@@ -1,4 +1,4 @@
-from src.trace_deidentifier.infrastructure.logging.contract import LoggerContract
+from .contract import LoggerContract
 
 
 class LoggableMixin:

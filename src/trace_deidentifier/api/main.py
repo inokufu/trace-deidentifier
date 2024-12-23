@@ -14,11 +14,11 @@ config = Settings()
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> dict[str, Any]:
+async def lifespan(_app: FastAPI) -> dict[str, Any]:
     """
     Lifespan context manager for the FastAPI application.
 
-    :param app: The FastAPI application instance
+    :param _app: The FastAPI application instance
     :yield: A dictionary containing logger and config objects
     """
     logger = LoguruLogger(level=config.get_log_level())
