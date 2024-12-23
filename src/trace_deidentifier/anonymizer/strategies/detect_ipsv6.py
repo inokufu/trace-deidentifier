@@ -11,6 +11,6 @@ class Ipv6DetectionStrategy(RegexDetectionStrategy):
         Prioritizes catching potential IP addresses over strict validation to ensure better privacy protection.
         """
         super().__init__(
-            pattern=r"[0-9a-fA-F:]{3,39}",
+            pattern=r"(?:\b|^)([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}(?:\b|$)",
             replacement="::",
         )

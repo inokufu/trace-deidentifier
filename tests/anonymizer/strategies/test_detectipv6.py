@@ -65,6 +65,16 @@ class TestIpv6DetectionStrategy:
                 {"safe": "text without ip"},
                 id="no-ipv6",
             ),
+            pytest.param(
+                {"url": "http://example.com/activities/course-001"},
+                {"url": "http://example.com/activities/course-001"},
+                id="url-with-numbers",
+            ),
+            pytest.param(
+                {"url": "https://test.com/path/with:colon"},
+                {"url": "https://test.com/path/with:colon"},
+                id="url-with-colon",
+            )
         ],
     )
     def test_ipv6_detection(
