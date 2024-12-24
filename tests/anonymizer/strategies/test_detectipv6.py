@@ -74,7 +74,7 @@ class TestIpv6DetectionStrategy:
                 {"url": "https://test.com/path/with:colon"},
                 {"url": "https://test.com/path/with:colon"},
                 id="url-with-colon",
-            )
+            ),
         ],
     )
     def test_ipv6_detection(
