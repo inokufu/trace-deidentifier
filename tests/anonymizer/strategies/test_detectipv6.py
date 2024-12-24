@@ -75,6 +75,11 @@ class TestIpv6DetectionStrategy:
                 {"url": "https://test.com/path/with:colon"},
                 id="url-with-colon",
             ),
+            pytest.param(
+                {"timestamp": "2013-05-18T05:32:34.804+00:00"},
+                {"timestamp": "2013-05-18T05:32:34.804+00:00"},
+                id="timestamp",
+            ),
         ],
     )
     def test_ipv6_detection(
