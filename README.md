@@ -3,7 +3,6 @@
 xAPI trace anonymization module.
 This component enables the anonymization of personal data in learning traces to facilitate secure data sharing between trusted organizations.
 
-
 ## Objectives
 - Anonymize xAPI traces while preserving their analytical value
 - Enable data sharing between organizations without compromising user privacy
@@ -12,16 +11,31 @@ This component enables the anonymization of personal data in learning traces to 
 
 ## How It Works
 ### Anonymization Principles
-- Replacement of sensitive data with the value "anonymous"
+- Replacement of sensitive data with anonymized values
 - Removal of non-required fields containing personal information
+- Recursive processing of nested structures (SubStatements)
 
 ### Data Processing
-#### Removed Data
-- actor.name (learner's name)
-- actor.mbox (email)
-- actor.mbox_sha1sum (email hash)
-- actor.account.name
-- actor.account.homePage
+
+#### Anonymized Agents
+The following fields are anonymized for all agents (Actor, Group Members, Object Agents, Context Agents, Authority):
+- name (learner's name) → "Anonymous"
+- mbox (email) →  "mailto:anonymous@anonymous.org"
+- mbox_sha1sum (email hash) → SHA1 hash of "mailto:anonymous@anonymous.org"
+- openid → "https://anonymous.org/anonymous"
+- account.name → "Anonymous"
+- account.homePage → "https://anonymous.org"
+
+#### Agent Locations Processed
+- actor (primary agent/group)
+- actor.member (for groups)
+- object (when objectType is "Agent" or "Group")
+- authority (including OAuth groups)
+- context.instructor
+- context.team
+- SubStatements (recursive processing of all the above fields)
+
+#### Removed Extensions
 - Browser extensions (http://id.tincanapi.com/extension/browser-info)
 - IP address (http://id.tincanapi.com/extension/ip-address)
 - Geolocation data (http://id.tincanapi.com/extension/geojson)
@@ -46,7 +60,6 @@ This component enables the anonymization of personal data in learning traces to 
    cp .env.default .env
    ```
    You can then modify the variables in `.env` as needed.
-
 
 ### Running the Service
 Start the FastAPI server using the script defined in pyproject.toml:
