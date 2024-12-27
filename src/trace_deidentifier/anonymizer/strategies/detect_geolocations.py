@@ -27,7 +27,7 @@ class GeoLocationDetectionStrategy(RegexDetectionStrategy):
             # UTM format
             r"\d{2}\s*[A-Z]\s+\d{6}\s+\d{7}",  # 31U 430959 5239573
         ]
-        pattern = "|".join(f"({p})" for p in patterns)
+        pattern = "|".join(f"(?:{p})" for p in patterns)
         super().__init__(
             pattern=pattern,
             replacement='{"lat":0,"lon":0}',

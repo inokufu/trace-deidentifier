@@ -2,7 +2,7 @@ import re
 from abc import ABC
 
 from src.trace_deidentifier.common.models.trace import Trace
-from src.trace_deidentifier.common.utils.utils_dict import DictUtils
+from src.trace_deidentifier.common.utils import utils_dict
 
 from .base import BaseAnonymizationStrategy
 
@@ -28,7 +28,7 @@ class RegexDetectionStrategy(BaseAnonymizationStrategy, ABC):
             {"pattern": self.pattern, "replacement": self.replacement},
         )
 
-        DictUtils.regex_replace(
+        utils_dict.regex_replace(
             data=trace.data,
             pattern=self.pattern,
             value=self.replacement,

@@ -1,7 +1,7 @@
 from typing import ClassVar
 
 from src.trace_deidentifier.common.models.trace import Trace
-from src.trace_deidentifier.common.utils.utils_dict import DictUtils
+from src.trace_deidentifier.common.utils import utils_dict
 
 from .base import BaseAnonymizationStrategy
 
@@ -95,7 +95,7 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
         :param fields_to_replace: Dictionary mapping field paths to their replacement values
         """
         for field, value in fields_to_replace.items():
-            replaced = DictUtils.replace_nested_field(
+            replaced = utils_dict.replace_nested_field(
                 data=target,
                 keys=field.split("."),
                 value=value,
