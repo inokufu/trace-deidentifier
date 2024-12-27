@@ -4,7 +4,7 @@ from typing import Any
 
 import pytest
 
-from src.trace_deidentifier.common.utils.utils_dict import DictUtils
+from src.trace_deidentifier.common.utils import utils_dict
 
 
 class TestGetNestedField:
@@ -82,7 +82,7 @@ class TestGetNestedField:
         :param keys: Path to the nested field
         :param expected: Expected value
         """
-        assert DictUtils.get_nested_field(data=data, keys=keys) == expected
+        assert utils_dict.get_nested_field(data=data, keys=keys) == expected
 
 
 class TestReplaceNestedField:
@@ -209,7 +209,7 @@ class TestReplaceNestedField:
         :param expected_data: Expected dictionary state after replacement
         """
         before_replaced = deepcopy(initial_data)
-        result = DictUtils.replace_nested_field(
+        result = utils_dict.replace_nested_field(
             data=initial_data,
             keys=keys,
             value=new_value,
@@ -284,5 +284,5 @@ class TestRegexReplace:
         :param replacement: Value to replace matches with
         :param expected: Expected output after replacement
         """
-        result = DictUtils.regex_replace(data=data, pattern=pattern, value=replacement)
+        result = utils_dict.regex_replace(data=data, pattern=pattern, value=replacement)
         assert result == expected
