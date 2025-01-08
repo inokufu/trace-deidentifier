@@ -18,7 +18,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.deidentifier.rule=Host(`${APP_EXTERNAL_HOST:-deidentifier.localhost}`)"
       - "traefik.http.routers.deidentifier.entrypoints=web"
-      - "traefik.http.services.deidentifier.loadbalancer.server.port=${APP_INTERNAL_PORT:-8000}"
+      - "traefik.http.services.deidentifier.loadbalancer.server.port=${APP_INTERNAL_PORT:-8001}"
     logging: *default-logging
     profiles: [ "dev" ]
 
@@ -55,7 +55,7 @@ services:
       - "traefik.http.routers.deidentifier.rule=Host(`${APP_EXTERNAL_HOST}`)"
       - "traefik.http.routers.deidentifier.entrypoints=websecure"
       - "traefik.http.routers.deidentifier.tls.certresolver=letsencrypt"
-      - "traefik.http.services.deidentifier.loadbalancer.server.port=${APP_INTERNAL_PORT:-8000}"
+      - "traefik.http.services.deidentifier.loadbalancer.server.port=${APP_INTERNAL_PORT:-8001}"
     restart: unless-stopped
     logging: *default-logging
     profiles: [ "prod" ]

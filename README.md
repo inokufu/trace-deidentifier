@@ -103,7 +103,7 @@ docker-compose --profile dev up --build
 
 The API will be available at : `http://deidentifier.localhost`
 
-Traefik Dashboard will be available at : `http://traefik.deidentifier.localhost:8080`
+Traefik Dashboard will be available at : `http://traefik.deidentifier.localhost`
 
 #### Quick Start (Without volumes or Traefik)
 For a quick test without full stack:
@@ -148,7 +148,7 @@ To anonymize an xAPI trace, send a POST request to the `/anonymize` endpoint.
 **Example Request**
 
 ```http
-curl -X POST http://localhost:8000/anonymize \
+curl -X POST http://localhost:8001/anonymize \
   -H "Content-Type: application/json" \
   -d '{
     "trace": {
