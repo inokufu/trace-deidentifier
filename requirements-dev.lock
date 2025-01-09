@@ -19,7 +19,7 @@ anyio==4.6.2.post1
 certifi==2024.8.30
     # via httpcore
     # via httpx
-click==8.1.7
+click==8.1.8
     # via uvicorn
 coverage==7.6.7
     # via pytest-cov
@@ -28,6 +28,8 @@ dnspython==2.7.0
 email-validator==2.2.0
     # via pydantic
 fastapi==0.115.6
+    # via trace-deidentifier
+gunicorn==23.0.0
     # via trace-deidentifier
 h11==0.14.0
     # via httpcore
@@ -55,6 +57,7 @@ loguru==0.7.3
 marisa-trie==1.2.1
     # via language-data
 packaging==24.2
+    # via gunicorn
     # via pytest
 pluggy==1.5.0
     # via pytest
@@ -95,7 +98,7 @@ uvicorn==0.34.0
     # via trace-deidentifier
 uvloop==0.21.0
     # via uvicorn
-watchfiles==0.24.0
+watchfiles==1.0.3
     # via uvicorn
 websockets==14.1
     # via uvicorn
