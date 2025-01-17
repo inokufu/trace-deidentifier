@@ -6,6 +6,7 @@ from src.trace_deidentifier.anonymizer.strategies.detect_ipsv6 import (
     Ipv6DetectionStrategy,
 )
 from src.trace_deidentifier.common.models.trace import Trace
+from src.trace_deidentifier.common.types import JsonType
 
 
 class TestIpv6DetectionStrategy:
@@ -85,8 +86,8 @@ class TestIpv6DetectionStrategy:
     def test_ipv6_detection(
         self,
         strategy: Ipv6DetectionStrategy,
-        input_data: dict,
-        expected_data: dict,
+        input_data: JsonType,
+        expected_data: JsonType,
     ) -> None:
         """
         Test IPv6 detection and replacement in various contexts.

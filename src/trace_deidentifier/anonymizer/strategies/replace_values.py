@@ -1,4 +1,5 @@
-from typing import ClassVar
+from collections.abc import Mapping, MutableSequence
+from typing import Any, ClassVar
 
 from src.trace_deidentifier.common.models.trace import Trace
 from src.trace_deidentifier.common.utils import utils_dict
@@ -28,21 +29,20 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
         """Inherited from BaseAnonymizationStrategy.anonymize."""
         self._anonymize_part(trace.data)
 
-    def _anonymize_part(self, data: dict) -> None:
+    def _anonymize_part(self, data: Mapping[str, Any]) -> None:
         """
         Recursively anonymize a part of the trace.
 
         :param data: Data part to anonymize
         """
-        if not isinstance(data, dict):
-            return
-
         # Handle fixed list of fields directly on the trace
         self._replace_fields(data, self.FIELDS_TO_REPLACE)
-        self._handle_group_members(data.get("actor"))
+        actor = data.get("actor")
+        if isinstance(actor, Mapping):
+            self._handle_group_members(actor)
 
         obj = data.get("object")
-        if isinstance(obj, dict):
+        if isinstance(obj, Mapping):
             obj_type = obj.get("objectType")
             # Handle object if it's an agent or a group
             # See: https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#object-is-agent
@@ -56,7 +56,7 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
         # Handle authority
         # See: https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#249-authority
         authority = data.get("authority")
-        if isinstance(authority, dict):
+        if isinstance(authority, Mapping):
             if authority.get("objectType") == "Group":
                 self._handle_group_members(authority)
             else:
@@ -65,29 +65,33 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
         # Handle context agents
         # See: https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#246-context
         context = data.get("context")
-        if isinstance(context, dict):
+        if isinstance(context, Mapping):
             for field in ("instructor", "team"):
                 context_field = context.get(field)
-                if isinstance(context_field, dict):
+                if isinstance(context_field, Mapping):
                     self._replace_fields(context_field, self.AGENT_REPLACEMENTS)
                     self._handle_group_members(context_field)
 
-    def _handle_group_members(self, data: dict) -> None:
+    def _handle_group_members(self, data: Mapping[str, Any]) -> None:
         """
         Handle anonymization of group members.
 
         :param data: Data containing potential group members
         """
-        if not isinstance(data, dict):
-            return
-
         member_attribute = data.get("member")
-        if data.get("objectType") == "Group" and isinstance(member_attribute, list):
-            members = (m for m in member_attribute if isinstance(m, dict))
+        if data.get("objectType") == "Group" and isinstance(
+            member_attribute,
+            MutableSequence,
+        ):
+            members = (m for m in member_attribute if isinstance(m, Mapping))
             for member in members:
                 self._replace_fields(member, self.AGENT_REPLACEMENTS)
 
-    def _replace_fields(self, target: dict, fields_to_replace: dict[str, str]) -> None:
+    def _replace_fields(
+        self,
+        target: Mapping[str, Any],
+        fields_to_replace: Mapping[str, str],
+    ) -> None:
         """
         Replace multiple fields in the target dictionary with their corresponding values.
 

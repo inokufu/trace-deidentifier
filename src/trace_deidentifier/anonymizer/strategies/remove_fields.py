@@ -1,3 +1,4 @@
+from collections.abc import MutableMapping
 from typing import ClassVar
 
 from src.trace_deidentifier.common.models.trace import Trace
@@ -9,7 +10,7 @@ from .base import BaseAnonymizationStrategy
 class RemoveFieldsStrategy(BaseAnonymizationStrategy):
     """Strategy to remove non-required fields with sensitive values."""
 
-    EXTENSIONS_TO_REMOVE: ClassVar[set[str]] = {
+    EXTENSIONS_TO_REMOVE: ClassVar[frozenset[str]] = {
         "browser-info",
         "ip-address",
         "invitee",
@@ -19,7 +20,7 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
         "geojson",
     }
 
-    EXTENSION_PATHS: ClassVar[set[str]] = {
+    EXTENSION_PATHS: ClassVar[frozenset[str]] = {
         "context",
         "object.definition",
         "result",
@@ -34,7 +35,7 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
             ):
                 self.logger.debug("Path found in trace", {"path": path})
                 extensions = obj.get("extensions")
-                if isinstance(extensions, dict) and extensions:
+                if isinstance(extensions, MutableMapping) and extensions:
                     self.logger.debug("Extensions found in path", {"path": path})
                     extensions_to_remove = [
                         ext_url
