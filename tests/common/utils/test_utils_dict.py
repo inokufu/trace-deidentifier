@@ -1,4 +1,5 @@
 import re
+from collections.abc import Mapping, Sequence
 from copy import deepcopy
 from typing import Any
 
@@ -71,8 +72,8 @@ class TestGetNestedField:
     )
     def test_get_nested_field(
         self,
-        data: dict[str, Any],
-        keys: list[str],
+        data: Mapping[str, Any],
+        keys: Sequence[str],
         expected: Any,
     ) -> None:
         """
@@ -194,10 +195,10 @@ class TestReplaceNestedField:
     )
     def test_replace_field_cases(
         self,
-        initial_data: dict[str, Any],
-        keys: list[str],
+        initial_data: Mapping[str, Any],
+        keys: Sequence[str],
         new_value: Any,
-        expected_data: dict[str, Any],
+        expected_data: Mapping[str, Any],
         expected_result: bool,
     ) -> None:
         """

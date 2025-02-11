@@ -1,10 +1,11 @@
 import re
+from collections.abc import MutableMapping, MutableSequence, Sequence
 from typing import Any
 
 
 def get_nested_field(
-    data: dict[str, Any],
-    keys: list[str],
+    data: MutableMapping[str, Any],
+    keys: Sequence[str],
 ) -> dict[str, Any] | None:
     """
     Get a nested dictionary field based on a path of keys.
@@ -14,14 +15,18 @@ def get_nested_field(
     :return: The nested dictionary or None if not found
     """
     for key in keys:
-        if isinstance(data, dict) and key in data:
+        if isinstance(data, MutableMapping) and key in data:
             data = data[key]
         else:
             return None
     return data
 
 
-def replace_nested_field(data: dict[str, Any], keys: list[str], value: Any) -> bool:
+def replace_nested_field(
+    data: MutableMapping[str, Any],
+    keys: Sequence[str],
+    value: Any,
+) -> bool:
     """
     Recursively navigate through nested dictionaries to replace a field.
 
@@ -37,7 +42,7 @@ def replace_nested_field(data: dict[str, Any], keys: list[str], value: Any) -> b
         if key in data:
             data[key] = value
             return True
-    elif key in data and isinstance(data[key], dict):
+    elif key in data and isinstance(data[key], MutableMapping):
         return replace_nested_field(
             data=data[key],
             keys=keys[1:],
@@ -59,7 +64,7 @@ def regex_replace(data: Any, pattern: re.Pattern, value: Any) -> Any:
         # Apply regex replacement directly
         return pattern.sub(repl=value, string=data)
 
-    if isinstance(data, dict):
+    if isinstance(data, MutableMapping):
         # Replace each value in the dictionary
         for key in data:
             data[key] = regex_replace(
@@ -68,7 +73,7 @@ def regex_replace(data: Any, pattern: re.Pattern, value: Any) -> Any:
                 value=value,
             )
 
-    elif isinstance(data, list):
+    elif isinstance(data, MutableSequence):
         # Replace each element in the list
         for i in range(len(data)):
             data[i] = regex_replace(

@@ -7,6 +7,7 @@ from src.trace_deidentifier.anonymizer.strategies.detect_ipsv4 import (
     Ipv4DetectionStrategy,
 )
 from src.trace_deidentifier.common.models.trace import Trace
+from src.trace_deidentifier.common.types import JsonType
 
 
 class TestIpv4DetectionStrategy:
@@ -76,8 +77,8 @@ class TestIpv4DetectionStrategy:
     def test_ipv4_detection(
         self,
         strategy: Ipv4DetectionStrategy,
-        input_data: dict,
-        expected_data: dict,
+        input_data: JsonType,
+        expected_data: JsonType,
     ) -> None:
         """
         Test IPv4 detection and replacement in various contexts.

@@ -6,6 +6,7 @@ from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
 from src.trace_deidentifier.anonymizer.exceptions import AnonymizationError
 from src.trace_deidentifier.anonymizer.strategies.base import BaseAnonymizationStrategy
 from src.trace_deidentifier.common.models.trace import Trace
+from src.trace_deidentifier.common.types import JsonType
 
 
 class TestAnonymizer:
@@ -85,7 +86,7 @@ class TestAnonymizer:
     def test_anonymization_scenarios(
         self,
         num_strategies: int,
-        trace_data: dict,
+        trace_data: JsonType,
         expected_calls: int,
         mock_logger: Mock,
     ) -> None:

@@ -1,6 +1,7 @@
 import pytest
 
 from src.trace_deidentifier.common.models.trace import InvalidTraceError, Trace
+from src.trace_deidentifier.common.types import JsonType
 
 
 class TestTrace:
@@ -25,7 +26,7 @@ class TestTrace:
             pytest.param({"actor": {}}, id="missing-required-fields"),
         ],
     )
-    def test_invalid_trace_formats(self, input_data: dict | None) -> None:
+    def test_invalid_trace_formats(self, input_data: JsonType | None) -> None:
         """
         Test various invalid trace formats.
 

@@ -1,4 +1,5 @@
 import io
+from collections.abc import Mapping
 from typing import Any
 
 import pytest
@@ -49,7 +50,7 @@ class TestLoguruLogger:
         capture_logs: io.StringIO,
         level: str,
         message: str,
-        context: dict[str, Any] | None,
+        context: Mapping[str, Any] | None,
     ) -> None:
         """
         Test all logging levels with various message/context combinations.
@@ -104,3 +105,9 @@ class TestLoguruLogger:
             logs.strip()
             == "{'message': 'An error occurred', 'context': {'exception_type': 'ValueError', 'exception_message': 'Sample exception', 'additional': 'info'}}"
         )
+
+    def test_logger_level_change(self, capture_logs: io.StringIO) -> None:
+        """Test that debug messages are not logged at INFO level."""
+        logger_info = LoguruLogger(level=LogLevel.INFO)
+        logger_info.debug("This should not appear")
+        assert not capture_logs.getvalue()

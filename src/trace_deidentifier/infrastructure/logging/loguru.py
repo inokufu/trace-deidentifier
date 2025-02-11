@@ -1,4 +1,5 @@
 import sys
+from collections.abc import Mapping
 from typing import Any
 
 from loguru import logger
@@ -32,7 +33,7 @@ class LoguruLogger(LoggerContract):
         self,
         level: LogLevel,
         message: str,
-        context: dict[str, Any] | None = None,
+        context: Mapping[str, Any] | None = None,
     ) -> None:
         log_data = {"message": message}
         if context:
@@ -40,23 +41,23 @@ class LoguruLogger(LoggerContract):
 
         self._logger.log(level.name, log_data)
 
-    def debug(self, message: str, context: dict[str, Any] | None = None) -> None:
+    def debug(self, message: str, context: Mapping[str, Any] | None = None) -> None:
         """Inherited from LoggerContract.debug."""
         self._log_with_context(level=LogLevel.DEBUG, message=message, context=context)
 
-    def info(self, message: str, context: dict[str, Any] | None = None) -> None:
+    def info(self, message: str, context: Mapping[str, Any] | None = None) -> None:
         """Inherited from LoggerContract.info."""
         self._log_with_context(level=LogLevel.INFO, message=message, context=context)
 
-    def warning(self, message: str, context: dict[str, Any] | None = None) -> None:
+    def warning(self, message: str, context: Mapping[str, Any] | None = None) -> None:
         """Inherited from LoggerContract.warning."""
         self._log_with_context(level=LogLevel.WARNING, message=message, context=context)
 
-    def error(self, message: str, context: dict[str, Any] | None = None) -> None:
+    def error(self, message: str, context: Mapping[str, Any] | None = None) -> None:
         """Inherited from LoggerContract.error."""
         self._log_with_context(level=LogLevel.ERROR, message=message, context=context)
 
-    def critical(self, message: str, context: dict[str, Any] | None = None) -> None:
+    def critical(self, message: str, context: Mapping[str, Any] | None = None) -> None:
         """Inherited from LoggerContract.critical."""
         self._log_with_context(
             level=LogLevel.CRITICAL,
@@ -68,7 +69,7 @@ class LoguruLogger(LoggerContract):
         self,
         message: str,
         exc: Exception,
-        context: dict[str, Any] | None = None,
+        context: Mapping[str, Any] | None = None,
     ) -> None:
         """Inherited from LoggerContract.exception."""
         exc_context = {

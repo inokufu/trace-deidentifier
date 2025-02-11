@@ -1,3 +1,5 @@
+from collections.abc import Sequence
+
 from src.trace_deidentifier.common.models.trace import Trace
 from src.trace_deidentifier.infrastructure.logging.contract import LoggerContract
 from src.trace_deidentifier.infrastructure.logging.loggable_mixin import LoggableMixin
@@ -11,7 +13,7 @@ class Anonymizer(LoggableMixin):
 
     def __init__(
         self,
-        strategies: list[BaseAnonymizationStrategy],
+        strategies: Sequence[BaseAnonymizationStrategy],
         logger: LoggerContract,
     ) -> None:
         """

@@ -7,6 +7,7 @@ from src.trace_deidentifier.anonymizer.strategies.remove_fields import (
     RemoveFieldsStrategy,
 )
 from src.trace_deidentifier.common.models.trace import Trace
+from src.trace_deidentifier.common.types import JsonType
 
 
 class TestRemoveFieldsStrategy:
@@ -101,7 +102,7 @@ class TestRemoveFieldsStrategy:
     def test_should_handle_missing_extensions(
         self,
         strategy: RemoveFieldsStrategy,
-        trace_data: dict,
+        trace_data: JsonType,
     ) -> None:
         """
         Test handling of traces without extensions.

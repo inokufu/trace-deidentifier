@@ -6,6 +6,7 @@ from src.trace_deidentifier.anonymizer.strategies.detect_geolocations import (
     GeoLocationDetectionStrategy,
 )
 from src.trace_deidentifier.common.models.trace import Trace
+from src.trace_deidentifier.common.types import JsonType
 
 
 class TestGeoLocationDetectionStrategy:
@@ -116,8 +117,8 @@ class TestGeoLocationDetectionStrategy:
     def test_geo_location_detection(
         self,
         strategy: GeoLocationDetectionStrategy,
-        input_data: dict,
-        expected_data: dict,
+        input_data: JsonType,
+        expected_data: JsonType,
     ) -> None:
         """
         Test geographic coordinate detection and replacement in various formats.
