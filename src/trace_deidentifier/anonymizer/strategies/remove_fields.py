@@ -18,6 +18,9 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
         "referrer",
         "tweet",
         "geojson",
+        "latitude",
+        "longitude",
+        "location",
     }
 
     EXTENSION_PATHS: ClassVar[frozenset[str]] = {
