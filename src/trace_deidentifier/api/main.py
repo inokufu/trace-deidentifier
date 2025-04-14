@@ -2,10 +2,9 @@ from contextlib import asynccontextmanager
 from typing import Any
 
 from fastapi import FastAPI
+from logger import LogLevel, LoguruLogger
 
 from src.trace_deidentifier.infrastructure.config.settings import Settings
-from src.trace_deidentifier.infrastructure.logging.loglevel import LogLevel
-from src.trace_deidentifier.infrastructure.logging.loguru import LoguruLogger
 
 from .exception_handler import ExceptionHandler
 from .routers.anonymize import router as anonymize_router

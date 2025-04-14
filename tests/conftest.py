@@ -1,9 +1,9 @@
 from unittest.mock import Mock
 
 import pytest
+from logger import LoggerContract
 
 from src.trace_deidentifier.anonymizer.strategies.base import BaseAnonymizationStrategy
-from src.trace_deidentifier.infrastructure.logging.contract import LoggerContract
 
 
 @pytest.fixture
