@@ -10,9 +10,10 @@ dependencies = [
     "uvicorn[standard]>=0.34.0",
     "ralph-malph>=5.0.1",
     "pydantic-settings>=2.7.0",
-    "loguru>=0.7.3",
     "httpx>=0.28.1",
     "gunicorn>=23.0.0",
+    "logger @ git+https://github.com/inokufu/python-logger@v0.1.0",
+    "configcore @ git+https://github.com/inokufu/python-config@v0.1.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.12"
