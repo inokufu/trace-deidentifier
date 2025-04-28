@@ -48,7 +48,7 @@ class Anonymizer(LoggableMixin):
                     {"strategy": type(strategy).__name__},
                 )
                 strategy.anonymize(trace=trace)
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 errors.append(str(e))
                 continue
 

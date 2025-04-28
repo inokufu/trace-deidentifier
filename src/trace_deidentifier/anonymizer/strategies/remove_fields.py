@@ -21,6 +21,8 @@ class RemoveFieldsStrategy(BaseAnonymizationStrategy):
         "latitude",
         "longitude",
         "location",
+        "username",
+        "biography",
     }
 
     EXTENSION_PATHS: ClassVar[frozenset[str]] = {
