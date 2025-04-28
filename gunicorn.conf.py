@@ -7,7 +7,7 @@ import multiprocessing
 import os
 
 # Server Socket
-bind = f"{os.getenv('APP_INTERNAL_HOST', '0.0.0.0')}:{os.getenv('APP_INTERNAL_PORT', '8001')}"
+bind = f"{os.getenv('APP_INTERNAL_HOST', '0.0.0.0')}:{os.getenv('APP_INTERNAL_PORT', '8001')}"  # noqa: S104
 
 reload = os.getenv("ENVIRONMENT", "development") == "development"
 

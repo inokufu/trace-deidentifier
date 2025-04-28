@@ -6,14 +6,16 @@ authors = [
     { name = "Pierre", email = "pierre.martel@inokufu.com" }
 ]
 dependencies = [
-    "fastapi>=0.115.6",
+    "fastapi==0.105.0",
     "uvicorn[standard]>=0.34.0",
-    "ralph-malph>=5.0.1",
+    "ralph-malph @ git+https://github.com/inokufu/ralph",
     "pydantic-settings>=2.7.0",
     "httpx>=0.28.1",
     "gunicorn>=23.0.0",
     "logger @ git+https://github.com/inokufu/python-logger@v0.1.0",
     "configcore @ git+https://github.com/inokufu/python-config@v0.1.0",
+    "python-multipart~=0.0.20",
+    "ijson~=3.3.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.12"
