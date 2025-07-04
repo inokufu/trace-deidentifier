@@ -123,7 +123,7 @@ docker-compose --profile prod up --build
 ### With Rye
 
 #### Prerequisites
-- Python 3.12 or higher
+- Python 3.13 or higher
 - [Rye](https://rye.astral.sh/) for dependency management
 
 #### Installation
@@ -217,7 +217,7 @@ These interfaces provide detailed information about all available endpoints, req
 
 The project uses Ruff for linting and formatting. Ruff is configured in `pyproject.toml` with strict settings:
 - All rules enabled by default
-- Python 3.12 target version
+- Python 3.13 target version
 - 88 character line length
 - Custom rule configurations for specific project needs
 
