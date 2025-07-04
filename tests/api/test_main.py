@@ -1,9 +1,9 @@
 import pytest
 from fastapi import FastAPI
+from logger import LoggerContract
 
 from src.trace_deidentifier.api.main import lifespan
 from src.trace_deidentifier.infrastructure.config.contract import ConfigContract
-from src.trace_deidentifier.infrastructure.logging.contract import LoggerContract
 
 
 class TestMain:

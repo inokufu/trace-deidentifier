@@ -35,7 +35,7 @@ async def lifespan(_app: FastAPI) -> dict[str, Any]:
 
 
 app = FastAPI(
-    title="Deidentifier API",
+    title="Trace Deidentifier API",
     version="0.0.1",
     debug=config.get_log_level() == LogLevel.DEBUG and not config.is_env_production(),
     lifespan=lifespan,
