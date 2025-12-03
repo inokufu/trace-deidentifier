@@ -1,0 +1,20 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tdi
+  labels:
+    app: tdi
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: example.com  # Placeholder that will be replaced in overlays
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tdi
+                port:
+                  name: http

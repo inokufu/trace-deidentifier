@@ -1,0 +1,36 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tdi-prod
+namePrefix: prod-
+
+
+resources:
+  - ../../base
+  - tdi-hpa.yaml
+  - namespace.yaml
+
+
+configMapGenerator:
+  - behavior: merge
+    literals:
+      - ENVIRONMENT=production
+      - LOG_LEVEL=warning
+      - THREADS_PER_WORKER=4
+      - WORKERS_COUNT=2
+    name: tdi-config
+
+labels:
+  - includeSelectors: true
+    pairs:
+      environment: production
+
+patches:
+  - path: patches/tdi-deployment-patch.yaml
+  - path: patches/tdi-ingress-patch.yaml
+
+images:
+  - name: tdi
+    newName: rg.fr-par.scw.cloud/deidentification/tdi
+    newTag: 1.0.0

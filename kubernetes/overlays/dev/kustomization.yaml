@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tdi-dev
+namePrefix: dev-
+
+resources:
+  - ../../base
+  - namespace.yaml
+
+
+configMapGenerator:
+  - behavior: merge
+    literals:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=debug
+      - WORKERS_COUNT=1
+    name: tdi-config
+
+patches:
+  - path: patches/tdi-deployment-patch.yaml
+  - path: patches/tdi-ingress-patch.yaml
