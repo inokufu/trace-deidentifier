@@ -10,7 +10,7 @@ async def health_liveness() -> JSONResponse:
     return JSONResponse(content={"status": "ok", "service": "tdi-api"})
 
 
-@router.get("/health/ready", status_code=200, tags=["Health"])
+@router.get("/health/ready", tags=["Health"])
 async def health_readiness(request: Request) -> JSONResponse:
     """Detailed health check endpoint."""
     return JSONResponse(
