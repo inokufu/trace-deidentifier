@@ -11,8 +11,8 @@ dependencies = [
     "ralph-malph~=5.0.1",
     "httpx~=0.28.1",
     "gunicorn~=23.0.0",
-    "logger @ git+https://github.com/inokufu/python-logger@v0.1.0",
-    "configcore @ git+https://github.com/inokufu/python-config@v0.1.0",
+    "logger @ git+https://github.com/inokufu/python-logger@v0.2.1",
+    "configcore @ git+https://github.com/inokufu/python-config@v0.2.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.13"
