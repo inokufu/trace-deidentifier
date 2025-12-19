@@ -10,24 +10,28 @@ from .base import BaseAnonymizationStrategy
 class RemoveFieldsStrategy(BaseAnonymizationStrategy):
     """Strategy to remove non-required fields with sensitive values."""
 
-    EXTENSIONS_TO_REMOVE: ClassVar[frozenset[str]] = {
-        "browser-info",
-        "ip-address",
-        "invitee",
-        "observer",
-        "referrer",
-        "tweet",
-        "geojson",
-        "latitude",
-        "longitude",
-        "location",
-    }
+    EXTENSIONS_TO_REMOVE: ClassVar[frozenset[str]] = frozenset(
+        {
+            "browser-info",
+            "ip-address",
+            "invitee",
+            "observer",
+            "referrer",
+            "tweet",
+            "geojson",
+            "latitude",
+            "longitude",
+            "location",
+        },
+    )
 
-    EXTENSION_PATHS: ClassVar[frozenset[str]] = {
-        "context",
-        "object.definition",
-        "result",
-    }
+    EXTENSION_PATHS: ClassVar[frozenset[str]] = frozenset(
+        {
+            "context",
+            "object.definition",
+            "result",
+        },
+    )
 
     def anonymize(self, trace: Trace) -> None:
         """Inherited from BaseAnonymizationStrategy.anonymize."""

@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-from fastapi.params import Depends
+from fastapi import APIRouter, Depends
 
 from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
 from src.trace_deidentifier.api.dependencies import get_anonymizer
