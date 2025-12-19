@@ -34,4 +34,4 @@ class TestTrace:
         :type input_data: dict
         """
         with pytest.raises(InvalidTraceError):
-            Trace(data=input_data)
+            Trace(data=input_data or {})

@@ -142,7 +142,7 @@ pydantic-settings==2.11.0
 pygments==2.19.2
     # via mkdocs-material
     # via pytest
-pymdown-extensions==10.18
+pymdown-extensions==10.19.1
     # via mkdocs-material
     # via mkdocstrings
 pytest==9.0.2
@@ -173,6 +173,7 @@ six==1.17.0
     # via python-dateutil
 starlette==0.50.0
     # via fastapi
+ty==0.0.3
 typing-extensions==4.15.0
     # via fastapi
     # via pydantic
@@ -181,7 +182,7 @@ typing-extensions==4.15.0
 typing-inspection==0.4.2
     # via pydantic
     # via pydantic-settings
-urllib3==2.6.1
+urllib3==2.6.2
     # via requests
 uvicorn==0.38.0
     # via trace-deidentifier
