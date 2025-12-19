@@ -138,4 +138,5 @@ class TestRemoveFieldsStrategy:
         trace = Trace.model_construct(data={"context": {"extensions": extensions}})
         strategy.anonymize(trace=trace)
         context = trace.data.get("context")
-        assert context is not None and context.get("extensions") == expected
+        assert context is not None
+        assert context.get("extensions") == expected

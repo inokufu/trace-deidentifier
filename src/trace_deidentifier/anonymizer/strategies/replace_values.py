@@ -1,4 +1,4 @@
-from collections.abc import Mapping, MutableSequence
+from collections.abc import Mapping, MutableMapping, MutableSequence
 from typing import Any, ClassVar
 
 from src.trace_deidentifier.common.models.trace import Trace
@@ -29,7 +29,7 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
         """Inherited from BaseAnonymizationStrategy.anonymize."""
         self._anonymize_part(trace.data)
 
-    def _anonymize_part(self, data: Mapping[str, Any]) -> None:
+    def _anonymize_part(self, data: MutableMapping[str, Any]) -> None:
         """
         Recursively anonymize a part of the trace.
 
@@ -89,7 +89,7 @@ class ReplaceSensitiveValuesStrategy(BaseAnonymizationStrategy):
 
     def _replace_fields(
         self,
-        target: Mapping[str, Any],
+        target: MutableMapping[str, Any],
         fields_to_replace: Mapping[str, str],
     ) -> None:
         """
