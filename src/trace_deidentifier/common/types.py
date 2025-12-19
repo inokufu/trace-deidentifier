@@ -1,4 +1,4 @@
-from collections.abc import Mapping
+from collections.abc import MutableMapping
 from typing import Any
 
-type JsonType = Mapping[str, Any]
+type JsonType = MutableMapping[str, Any]

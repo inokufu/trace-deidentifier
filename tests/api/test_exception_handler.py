@@ -50,9 +50,8 @@ class TestExceptionHandler:
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         body = response.body
-        assert isinstance(body, bytes) and json.loads(body.decode()) == {
-            "detail": error_message
-        }
+        assert isinstance(body, bytes)
+        assert json.loads(body.decode()) == {"detail": error_message}
 
     @pytest.mark.asyncio
     async def test_unknown_exception(
@@ -76,9 +75,8 @@ class TestExceptionHandler:
 
         assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
         body = response.body
-        assert isinstance(body, bytes) and json.loads(body.decode()) == {
-            "detail": error_message
-        }
+        assert isinstance(body, bytes)
+        assert json.loads(body.decode()) == {"detail": error_message}
 
     def test_exception_with_cause(
         self,
