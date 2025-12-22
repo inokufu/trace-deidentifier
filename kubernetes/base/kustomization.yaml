@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - tdi-deployment.yaml
+  - tdi-service.yaml
+  - tdi-ingress.yaml
+
+configMapGenerator:
+  - name: tdi-config
+
+images:
+  - name: tdi

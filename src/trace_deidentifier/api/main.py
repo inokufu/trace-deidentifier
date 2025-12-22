@@ -9,6 +9,7 @@ from src.trace_deidentifier.infrastructure.config.settings import Settings
 
 from .exception_handler import ExceptionHandler
 from .routers.anonymize import router as anonymize_router
+from .routers.infrastructure import router as infra_router
 
 config = Settings()
 
@@ -46,3 +47,4 @@ exception_handler = ExceptionHandler()
 exception_handler.configure(app=app)
 
 app.include_router(router=anonymize_router)
+app.include_router(router=infra_router)

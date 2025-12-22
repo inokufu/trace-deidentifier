@@ -1,0 +1,19 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tdi
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: tdi
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "192Mi"
+            limits:
+              cpu: "500m"
+              memory: "384Mi"
