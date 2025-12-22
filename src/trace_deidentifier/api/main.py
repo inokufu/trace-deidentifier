@@ -1,3 +1,4 @@
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Any
 
@@ -14,14 +15,14 @@ config = Settings()
 
 
 @asynccontextmanager
-async def lifespan(_app: FastAPI) -> dict[str, Any]:
+async def lifespan(_app: FastAPI) -> AsyncIterator[dict[str, Any]]:
     """
     Lifespan context manager for the FastAPI application.
 
     :param _app: The FastAPI application instance
     :yield: A dictionary containing logger and config objects
     """
-    logger = LoguruLogger(level=config.get_log_level())
+    logger = LoguruLogger(level=LogLevel[config.get_log_level().name])
     logger.info(
         "Application starting",
         {

@@ -133,7 +133,7 @@ pydantic-settings==2.11.0
     # via ralph-malph
 pygments==2.19.2
     # via mkdocs-material
-pymdown-extensions==10.18
+pymdown-extensions==10.19.1
     # via mkdocs-material
     # via mkdocstrings
 python-dateutil==2.9.0.post0
@@ -167,7 +167,7 @@ typing-extensions==4.15.0
 typing-inspection==0.4.2
     # via pydantic
     # via pydantic-settings
-urllib3==2.6.1
+urllib3==2.6.2
     # via requests
 uvicorn==0.38.0
     # via trace-deidentifier

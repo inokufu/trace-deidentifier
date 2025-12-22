@@ -1,5 +1,5 @@
 import re
-from collections.abc import Mapping, Sequence
+from collections.abc import MutableMapping, Sequence
 from copy import deepcopy
 from typing import Any
 
@@ -72,7 +72,7 @@ class TestGetNestedField:
     )
     def test_get_nested_field(
         self,
-        data: Mapping[str, Any],
+        data: MutableMapping[str, Any],
         keys: Sequence[str],
         expected: Any,
     ) -> None:
@@ -195,10 +195,10 @@ class TestReplaceNestedField:
     )
     def test_replace_field_cases(
         self,
-        initial_data: Mapping[str, Any],
+        initial_data: MutableMapping[str, Any],
         keys: Sequence[str],
         new_value: Any,
-        expected_data: Mapping[str, Any],
+        expected_data: MutableMapping[str, Any],
         expected_result: bool,
     ) -> None:
         """

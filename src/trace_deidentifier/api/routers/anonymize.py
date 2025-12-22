@@ -1,5 +1,6 @@
-from fastapi import APIRouter
-from fastapi.params import Depends
+from typing import Annotated
+
+from fastapi import APIRouter, Depends
 
 from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
 from src.trace_deidentifier.api.dependencies import get_anonymizer
@@ -19,7 +20,7 @@ router = APIRouter(prefix="/anonymize")
 )
 async def anonymize_trace(
     query: AnonymizeTraceRequestModel,
-    anonymizer: Anonymizer = Depends(get_anonymizer),
+    anonymizer: Annotated[Anonymizer, Depends(get_anonymizer)],
 ) -> AnonymizeTraceResponseModel:
     """
     Anonymize a trace by applying configured anonymization strategies.

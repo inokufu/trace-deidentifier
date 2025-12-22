@@ -6,7 +6,7 @@ from typing import Any
 def get_nested_field(
     data: MutableMapping[str, Any],
     keys: Sequence[str],
-) -> dict[str, Any] | None:
+) -> MutableMapping[str, Any] | None:
     """
     Get a nested dictionary field based on a path of keys.
 
