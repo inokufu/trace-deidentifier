@@ -173,7 +173,7 @@ six==1.17.0
     # via python-dateutil
 starlette==0.50.0
     # via fastapi
-ty==0.0.3
+ty==0.0.5
 typing-extensions==4.15.0
     # via fastapi
     # via pydantic
