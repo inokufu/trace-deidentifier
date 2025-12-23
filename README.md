@@ -16,7 +16,7 @@
       * [Development Environment](#development-environment)
       * [Quick Start (Without volumes or Traefik)](#quick-start-without-volumes-or-traefik)
       * [Production Environment](#production-environment)
-    * [With Rye](#with-rye)
+    * [With uv](#with-uv)
       * [Prerequisites](#prerequisites-1)
       * [Installation](#installation)
       * [Running the Application](#running-the-application)
@@ -73,7 +73,7 @@ The following fields are anonymized for all agents (Actor, Group Members, Object
 
 ## Setup and installation
 
-You can run the application either directly with **Rye** or using **Docker**.
+You can run the application either directly with **uv** or using **Docker**.
 
 1. Clone the repository
 2. Set up environment variables:
@@ -120,21 +120,21 @@ Configure production-specific settings, then build and run the production enviro
 docker-compose --profile prod up --build
 ```
 
-### With Rye
+### With uv
 
 #### Prerequisites
 - Python 3.13 or higher
-- [Rye](https://rye.astral.sh/) for dependency management
+- [uv](https://docs.astral.sh/uv) for dependency management
 
 #### Installation
-1. Install Rye, see https://rye.astral.sh/guide/installation/
-2. Install dependencies using Rye
+1. Install uv, see https://docs.astral.sh/uv/getting-started/installation/
+2. Install dependencies using uv
    ```
-   rye sync
+   uv sync
    ```
 3. Start the FastAPI server using the script defined in pyproject.toml
    ```
-   rye run start
+   uv run start
    ```
 
 #### Running the Application

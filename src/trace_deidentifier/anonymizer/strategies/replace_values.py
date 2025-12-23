@@ -1,8 +1,8 @@
 from collections.abc import Mapping, MutableMapping, MutableSequence
 from typing import Any, ClassVar
 
-from src.trace_deidentifier.common.models.trace import Trace
-from src.trace_deidentifier.common.utils import utils_dict
+from trace_deidentifier.common.models.trace import Trace
+from trace_deidentifier.common.utils import utils_dict
 
 from .base import BaseAnonymizationStrategy
 

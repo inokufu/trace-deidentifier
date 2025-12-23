@@ -3,10 +3,10 @@ from unittest.mock import Mock
 
 import pytest
 
-from src.trace_deidentifier.anonymizer.strategies.replace_values import (
+from trace_deidentifier.anonymizer.strategies.replace_values import (
     ReplaceSensitiveValuesStrategy,
 )
-from src.trace_deidentifier.common.models.trace import Trace
+from trace_deidentifier.common.models.trace import Trace
 
 
 class TestReplaceSensitiveValuesStrategy:

@@ -2,7 +2,7 @@ from collections.abc import Sequence
 
 from logger import LoggableMixin, LoggerContract
 
-from src.trace_deidentifier.common.models.trace import Trace
+from trace_deidentifier.common.models.trace import Trace
 
 from .exceptions import AnonymizationError
 from .strategies.base import BaseAnonymizationStrategy

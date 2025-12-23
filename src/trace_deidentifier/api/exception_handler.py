@@ -2,8 +2,8 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from logger import LogLevel
 
-from src.trace_deidentifier.anonymizer.exceptions import AnonymizationError
-from src.trace_deidentifier.common.exceptions import InvalidTraceError
+from trace_deidentifier.anonymizer.exceptions import AnonymizationError
+from trace_deidentifier.common.exceptions import InvalidTraceError
 
 
 class ExceptionHandler:

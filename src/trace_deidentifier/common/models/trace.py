@@ -1,8 +1,8 @@
 from pydantic import BaseModel, model_validator
 from ralph.models.xapi.base.statements import BaseXapiStatement
 
-from src.trace_deidentifier.common.exceptions import InvalidTraceError
-from src.trace_deidentifier.common.types import JsonType
+from trace_deidentifier.common.exceptions import InvalidTraceError
+from trace_deidentifier.common.types import JsonType
 
 
 class Trace(BaseModel):

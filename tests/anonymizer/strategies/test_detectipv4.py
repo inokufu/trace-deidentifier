@@ -3,11 +3,11 @@ from unittest.mock import Mock
 
 import pytest
 
-from src.trace_deidentifier.anonymizer.strategies.detect_ipsv4 import (
+from trace_deidentifier.anonymizer.strategies.detect_ipsv4 import (
     Ipv4DetectionStrategy,
 )
-from src.trace_deidentifier.common.models.trace import Trace
-from src.trace_deidentifier.common.types import JsonType
+from trace_deidentifier.common.models.trace import Trace
+from trace_deidentifier.common.types import JsonType
 
 
 class TestIpv4DetectionStrategy:

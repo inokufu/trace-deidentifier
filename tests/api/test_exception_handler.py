@@ -4,8 +4,8 @@ from unittest.mock import Mock
 import pytest
 from fastapi import Request, status
 
-from src.trace_deidentifier.api.exception_handler import ExceptionHandler
-from src.trace_deidentifier.common.exceptions import InvalidTraceError
+from trace_deidentifier.api.exception_handler import ExceptionHandler
+from trace_deidentifier.common.exceptions import InvalidTraceError
 
 
 class TestExceptionHandler:

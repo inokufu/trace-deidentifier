@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from logger import LoggableMixin
 
-from src.trace_deidentifier.common.models.trace import Trace
+from trace_deidentifier.common.models.trace import Trace
 
 
 class BaseAnonymizationStrategy(ABC, LoggableMixin):
