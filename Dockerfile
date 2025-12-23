@@ -1,27 +1,65 @@
-ARG VARIANT=3.12.8-slim-bookworm
+ARG VARIANT=3.14.2-slim-bookworm
 
 # Base stage
 FROM python:${VARIANT} AS base
 WORKDIR /app
-ENV PIP_NO_CACHE_DIR=1 \
-    PYTHONDONTWRITEBYTECODE=1
-COPY gunicorn.conf.py pyproject.toml ./
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:0.9.18 /uv /uvx /bin/
+
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    UV_LINK_MODE=copy
 
 ## Dev with mounted volumes and dev deps
 FROM base AS dev
-COPY requirements-dev.lock  ./
-RUN pip install -r requirements-dev.lock
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --locked --no-install-project
+
+COPY pyproject.toml uv.lock ./
+
 VOLUME ["/app/src", "/app/tests"]
-CMD ["gunicorn", "trace_deidentifier.api.main:app"]
+CMD ["uv", "run", "start"]
 
 # Standalone dev with code included
-FROM dev AS dev-standalone
+FROM base AS dev-standalone
+
+COPY pyproject.toml uv.lock ./
 COPY src ./src
 COPY tests ./tests
 
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --locked
+
+CMD ["uv", "run", "start"]
+
 ## Prod with copied code and minimal deps
 FROM base AS prod
-COPY requirements.lock ./
-RUN pip install --no-deps --no-compile -r requirements.lock
+
+# Install dependencies only (intermediate layer)
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --locked --no-install-project --no-dev
+
+# Copy source code
+COPY pyproject.toml uv.lock gunicorn.conf.py ./
 COPY src ./src
+
+# Install project with bytecode compilation and non-editable mode
+ENV UV_COMPILE_BYTECODE=1
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --locked --no-dev --no-editable
+
+# Create non-root user
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+USER appuser
+
+ENV PATH="/app/.venv/bin:$PATH"
 CMD ["gunicorn", "trace_deidentifier.api.main:app"]
