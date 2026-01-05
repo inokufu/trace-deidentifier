@@ -3,11 +3,11 @@ from unittest.mock import Mock
 
 import pytest
 
-from src.trace_deidentifier.anonymizer.strategies.remove_fields import (
+from trace_deidentifier.anonymizer.strategies.remove_fields import (
     RemoveFieldsStrategy,
 )
-from src.trace_deidentifier.common.models.trace import Trace
-from src.trace_deidentifier.common.types import JsonType
+from trace_deidentifier.common.models.trace import Trace
+from trace_deidentifier.common.types import JsonType
 
 
 class TestRemoveFieldsStrategy:

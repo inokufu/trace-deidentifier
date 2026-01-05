@@ -5,7 +5,7 @@ from typing import Any
 
 import pytest
 
-from src.trace_deidentifier.common.utils import utils_dict
+from trace_deidentifier.common.utils import utils_dict
 
 
 class TestGetNestedField:

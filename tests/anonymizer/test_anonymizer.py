@@ -2,11 +2,11 @@ from unittest.mock import Mock
 
 import pytest
 
-from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
-from src.trace_deidentifier.anonymizer.exceptions import AnonymizationError
-from src.trace_deidentifier.anonymizer.strategies.base import BaseAnonymizationStrategy
-from src.trace_deidentifier.common.models.trace import Trace
-from src.trace_deidentifier.common.types import JsonType
+from trace_deidentifier.anonymizer.anonymizer import Anonymizer
+from trace_deidentifier.anonymizer.exceptions import AnonymizationError
+from trace_deidentifier.anonymizer.strategies.base import BaseAnonymizationStrategy
+from trace_deidentifier.common.models.trace import Trace
+from trace_deidentifier.common.types import JsonType
 
 
 class TestAnonymizer:

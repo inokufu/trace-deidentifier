@@ -2,9 +2,9 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
-from src.trace_deidentifier.api.dependencies import get_anonymizer
-from src.trace_deidentifier.api.schemas import (
+from trace_deidentifier.anonymizer.anonymizer import Anonymizer
+from trace_deidentifier.api.dependencies import get_anonymizer
+from trace_deidentifier.api.schemas import (
     AnonymizeTraceRequestModel,
     AnonymizeTraceResponseModel,
 )

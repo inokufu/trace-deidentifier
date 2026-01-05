@@ -3,7 +3,7 @@ from unittest.mock import Mock
 import pytest
 from logger import LoggerContract
 
-from src.trace_deidentifier.anonymizer.strategies.base import BaseAnonymizationStrategy
+from trace_deidentifier.anonymizer.strategies.base import BaseAnonymizationStrategy
 
 
 @pytest.fixture

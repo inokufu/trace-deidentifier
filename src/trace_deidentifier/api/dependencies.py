@@ -1,22 +1,22 @@
 from fastapi import Request
 
-from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
-from src.trace_deidentifier.anonymizer.strategies.detect_emails import (
+from trace_deidentifier.anonymizer.anonymizer import Anonymizer
+from trace_deidentifier.anonymizer.strategies.detect_emails import (
     EmailDetectionStrategy,
 )
-from src.trace_deidentifier.anonymizer.strategies.detect_geolocations import (
+from trace_deidentifier.anonymizer.strategies.detect_geolocations import (
     GeoLocationDetectionStrategy,
 )
-from src.trace_deidentifier.anonymizer.strategies.detect_ipsv4 import (
+from trace_deidentifier.anonymizer.strategies.detect_ipsv4 import (
     Ipv4DetectionStrategy,
 )
-from src.trace_deidentifier.anonymizer.strategies.detect_ipsv6 import (
+from trace_deidentifier.anonymizer.strategies.detect_ipsv6 import (
     Ipv6DetectionStrategy,
 )
-from src.trace_deidentifier.anonymizer.strategies.remove_fields import (
+from trace_deidentifier.anonymizer.strategies.remove_fields import (
     RemoveFieldsStrategy,
 )
-from src.trace_deidentifier.anonymizer.strategies.replace_values import (
+from trace_deidentifier.anonymizer.strategies.replace_values import (
     ReplaceSensitiveValuesStrategy,
 )
 

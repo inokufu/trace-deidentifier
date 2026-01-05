@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from src.trace_deidentifier.common.models.trace import Trace
+from trace_deidentifier.common.models.trace import Trace
 
 
 class AnonymizeTraceRequestModel(BaseModel):

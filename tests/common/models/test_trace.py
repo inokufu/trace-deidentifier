@@ -1,7 +1,7 @@
 import pytest
 
-from src.trace_deidentifier.common.models.trace import InvalidTraceError, Trace
-from src.trace_deidentifier.common.types import JsonType
+from trace_deidentifier.common.models.trace import InvalidTraceError, Trace
+from trace_deidentifier.common.types import JsonType
 
 
 class TestTrace:

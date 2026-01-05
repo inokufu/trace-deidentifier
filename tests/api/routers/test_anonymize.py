@@ -4,9 +4,9 @@ import pytest
 from fastapi import FastAPI, Request, status
 from fastapi.testclient import TestClient
 
-from src.trace_deidentifier.anonymizer.anonymizer import Anonymizer
-from src.trace_deidentifier.api.dependencies import get_anonymizer
-from src.trace_deidentifier.api.routers.anonymize import router
+from trace_deidentifier.anonymizer.anonymizer import Anonymizer
+from trace_deidentifier.api.dependencies import get_anonymizer
+from trace_deidentifier.api.routers.anonymize import router
 
 
 class TestAnonymize:
